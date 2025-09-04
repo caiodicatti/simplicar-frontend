@@ -1,0 +1,35 @@
+.pro-sidebar {
+    width: 220px;
+    height: 100vh;
+    background-color: var(--sidebar-bg-color);
+    color: var(--sidebar-menu-font-color);
+}
+
+.pro-sidebar .ps-menu-button:hover {
+    background-color: #8d8d8d !important;
+    transition: all 0.3s;
+}
+
+.pro-menu-item {
+    color: var(--sidebar-menu-font-color);
+    font-weight: bold;
+    font-size: 16px;
+    background-color: #cbcbcb !important;
+    border-bottom: rgba(0, 0, 0, 0.13) 1px solid;
+}
+
+.pro-menu-item .ps-menu-button:hover {
+    background-color: #201f1f !important;
+    color: rgb(255, 255, 255) !important;
+    transition: all 0.3s;
+}
+
+.pro-sub-menu .pro-menu-item {
+    padding-left: 30px;
+}
+
+.menu-toggle {
+    font-weight: bold;
+    font-size: 18px;
+    color: rgb(0, 0, 0);
+}

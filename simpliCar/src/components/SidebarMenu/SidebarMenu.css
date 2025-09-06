@@ -14,7 +14,7 @@
     color: var(--sidebar-menu-font-color);
     font-weight: bold;
     font-size: 16px;
-    background-color: #cbcbcb !important;
+    background-color: var(--sub-menu-bg-color) !important;
     border-bottom: rgba(0, 0, 0, 0.13) 1px solid;
 }
 

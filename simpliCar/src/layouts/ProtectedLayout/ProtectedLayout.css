@@ -1,22 +1,23 @@
 .protected-layout {
     display: flex;
     min-height: 100vh;
+    background: #f5f6fa;
 }
 
 .protected-layout-content {
     flex: 1;
-    padding: 20px;
+    padding: 22px;
+    transition: padding 0.23s;
 }
 
-/* Responsivo para mobile */
+
 @media (max-width: 600px) {
     .protected-layout {
-        /*flex-direction: column;*/
+        flex-direction: column;
     }
 
     .protected-layout-content {
-        flex: 1;
-        padding: 33px 2px;
+        padding: 10px 4px 16px 4px;
     }
 }
 
@@ -25,5 +26,4 @@
         flex: 1;
         padding: 33px 2px;
     }
-
 }

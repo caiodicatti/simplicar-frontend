@@ -37,7 +37,7 @@
     .vehicle-grid-row {
         padding: 10px 6px;
         font-size: 1em;
-        width: 83vw;
+        width: 100%;
     }
 
     .vehicle-grid-info {
@@ -56,7 +56,7 @@
     .vehicle-grid-row {
         padding: 4px 4px;
         font-size: 0.93em;
-        width: 75vw;
+        width: 100%;
     }
 
     .vehicle-grid-actions .btn {

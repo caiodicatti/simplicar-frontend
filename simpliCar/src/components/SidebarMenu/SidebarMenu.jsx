@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
-import { FaCar, FaMotorcycle, FaBars, FaCog } from "react-icons/fa";
-import "./SidebarMenu.css"; // vamos criar estilos adicionais aqui
+import { FaCar, FaMotorcycle, FaBars, FaCog, FaHome } from "react-icons/fa";
+import "./SidebarMenu.css";
 
 export default function SidebarMenu() {
     const [collapsed, setCollapsed] = useState(true);
@@ -22,6 +22,20 @@ export default function SidebarMenu() {
                 >
                     {collapsed ? "" : "Menu"}
                 </MenuItem>
+
+                {!collapsed && (
+                    <MenuItem
+                        icon={<FaHome />}
+                        className="menu-home"
+                        component={<Link to="/home" />}
+                        style={{
+                            fontSize: "17px",
+                            borderBottom: "1px solid rgba(0,0,0,0.13)"
+                        }}
+                    >
+                        Página Principal
+                    </MenuItem>
+                )}
 
                 {!collapsed && (
                     <SubMenu

@@ -1,0 +1,75 @@
+.vehicle-grid-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--grid-row-bg-color);
+    border-radius: 8px;
+    padding: 14px 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: background 0.15s, box-shadow 0.15s;
+    color: var(--grid-row-font-color);
+}
+
+.vehicle-grid-row:hover {
+    background: #e9f5ff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.09);
+}
+
+.vehicle-grid-info {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.vehicle-grid-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.vehicle-grid-actions .btn {
+    min-width: 38px;
+    min-height: 32px;
+    padding: 4px 0;
+}
+
+@media (max-width: 600px) {
+    .vehicle-grid-row {
+        padding: 10px 6px;
+        font-size: 1em;
+        width: 83vw;
+    }
+
+    .vehicle-grid-info {
+        font-size: 1em;
+    }
+
+    .vehicle-grid-actions .btn {
+        min-width: 30px;
+        font-size: 1.1em;
+        padding: 4px 0;
+    }
+}
+
+@media (max-width: 430px) {
+
+    .vehicle-grid-row {
+        padding: 4px 4px;
+        font-size: 0.93em;
+        width: 75vw;
+    }
+
+    .vehicle-grid-actions .btn {
+        min-width: 30px;
+        font-size: 1em;
+        padding: 2px 0;
+    }
+
+    .vehicle-extra {
+        display: none;
+    }
+
+    .vehicle-grid-info {
+        font-size: 1.1em;
+    }
+}

@@ -1,0 +1,13 @@
+.pagination-container {
+    margin-top: 1rem;
+}
+
+@media (max-width: 576px) {
+    .pagination-container {
+        justify-content: center;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+    }
+}

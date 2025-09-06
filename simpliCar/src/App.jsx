@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import HomePage from "./pages/HomePage/HomePage";
 import ProtectedRoute from "./ProtectedRoute";
-import ProtectedLayout from "./layouts/ProtectedLayout";
+import ProtectedLayout from "./layouts/ProtectedLayout/ProtectedLayout";
+import VehicleSearchPage from "./pages/VehicleSearchPage/VehicleSearchPage";
 
 import SidebarMenu from "./components/SidebarMenu/SidebarMenu";
 
@@ -27,7 +28,7 @@ export default function App() {
         element={
           <ProtectedRoute>
             <ProtectedLayout>
-              <div>Carros Page</div>
+              <VehicleSearchPage vehicleType="Carro" />
             </ProtectedLayout>
           </ProtectedRoute>
         }
@@ -38,7 +39,7 @@ export default function App() {
         element={
           <ProtectedRoute>
             <ProtectedLayout>
-              <div>Motos Page</div>
+              <VehicleSearchPage vehicleType="Moto" />
             </ProtectedLayout>
           </ProtectedRoute>
         }

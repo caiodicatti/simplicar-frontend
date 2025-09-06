@@ -1,0 +1,29 @@
+.protected-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.protected-layout-content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Responsivo para mobile */
+@media (max-width: 600px) {
+    .protected-layout {
+        /*flex-direction: column;*/
+    }
+
+    .protected-layout-content {
+        flex: 1;
+        padding: 33px 2px;
+    }
+}
+
+@media (max-width: 430px) {
+    .protected-layout-content {
+        flex: 1;
+        padding: 33px 2px;
+    }
+
+}

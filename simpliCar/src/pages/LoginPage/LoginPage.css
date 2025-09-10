@@ -52,3 +52,30 @@
     font-weight: bold;
     text-shadow: 0 1px 2px #000;
 }
+
+.login-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 16px 0 8px 0;
+    gap: 6px;
+}
+
+.loader {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #222;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -7,16 +7,34 @@ import './LoginPage.css';
 
 export default function LoginPage() {
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    function handleLogin(user, password) {
-        if (login(user, password)) {
-            //setLoggedIn(true);
-            localStorage.setItem("userToken", "fakeToken");
-            setError('');
-            navigate('/home');
-        } else {
-            setError('Usuário ou senha inválidos!');
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function handleLogin(e, user, password) {
+        e.preventDefault();
+        setLoading(true);
+        setError('');
+
+        await sleep(1500);
+
+        try {
+            const userData = await login(user, password);
+            if (userData) {
+                localStorage.setItem("userToken", JSON.stringify(userData));
+                setError('');
+                navigate('/home');
+            } else {
+                setError('Usuário ou senha inválidos!');
+            }
+        } catch (err) {
+            console.log(err);
+            setError('Erro ao conectar!');
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -28,7 +46,13 @@ export default function LoginPage() {
                         <div className="login-card">
                             <h2 className="login-title">Login</h2>
                             <div className="login-form-wrapper">
-                                <LoginForm onLogin={handleLogin} btnClass="" />
+                                <LoginForm onLogin={handleLogin} btnClass="" loading={loading} />
+                                {loading && (
+                                    <div className="login-loader">
+                                        <div className="loader"></div>
+                                        <span>Entrando...</span>
+                                    </div>
+                                )}
                                 {error && <div className="error text-center">{error}</div>}
                             </div>
                         </div>

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import './LoginForm.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
-export default function LoginForm({ onLogin, btnClass }) {
+export default function LoginForm({ onLogin, btnClass, loading }) {
     const [user, setUser] = useState('');
     const [password, setPassword] = useState('');
 
     function handleSubmit(e) {
         e.preventDefault();
-        onLogin(user, password);
+        onLogin(e, user, password);
     }
 
     return (
@@ -20,6 +20,7 @@ export default function LoginForm({ onLogin, btnClass }) {
                     value={user}
                     onChange={e => setUser(e.target.value)}
                     required
+                    disabled={loading}
                 />
             </div>
             <div>
@@ -29,10 +30,17 @@ export default function LoginForm({ onLogin, btnClass }) {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     required
+                    disabled={loading}
                 />
             </div>
 
-            <button className={btnClass} type="submit">Entrar</button>
+            <button
+                className={btnClass}
+                type="submit"
+                disabled={loading}
+            >
+                {loading ? "Entrando..." : "Entrar"}
+            </button>
 
         </form>
     );

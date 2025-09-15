@@ -1,5 +1,6 @@
 .protected-layout {
     display: flex;
+    height: 100vh;
     min-height: 100vh;
     background: #f5f6fa;
 }
@@ -8,6 +9,7 @@
     flex: 1;
     padding: 22px;
     transition: padding 0.23s;
+    overflow-y: auto;
 }
 
 

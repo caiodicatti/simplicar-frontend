@@ -1,0 +1,305 @@
+import React, { useState, useEffect } from "react";
+import { Form, Button, Row, Col, Spinner, Table, InputGroup } from "react-bootstrap";
+import TradeInSearchSelector from "../TradeInSearchSelector/TradeInSearchSelector";
+import "./VehicleForm.css";
+
+const initialState = {
+    plate: "",
+    brand: "",
+    model: "",
+    year: "",
+    color: "",
+    fipeValue: "",
+    referenceMonth: "",
+    mileage: "",
+    purchaseValue: "",
+    saleValue: "",
+    tradeInValue: "",
+    sold: "",
+    expenses: [],
+    notes: "",
+};
+
+export default function VehicleForm({ vehicleType = "", vehicleData = null, isEdit = false }) {
+    const [form, setForm] = useState(vehicleData || initialState);
+    const [loadingPlate, setLoadingPlate] = useState(false);
+    const [expenseRows, setExpenseRows] = useState([{ description: "", value: "" }]);
+
+    useEffect(() => {
+        if (isEdit && vehicleData) {
+            setForm(vehicleData); // Preenche os dados do form
+        }
+    }, [vehicleData, isEdit]);
+
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setForm((prev) => ({ ...prev, [name]: value }));
+        console.log(form);
+    }
+
+    function handlePlateBlur() {
+        console.log('aqui chamará a API')
+        if (form.plate.trim()) {
+            setLoadingPlate(true);
+            setTimeout(() => {
+                setLoadingPlate(false);
+            }, 1200);
+        }
+    }
+
+    function handleExpenseChange(idx, field, value) {
+        setExpenseRows((prev) =>
+            prev.map((row, i) => (i === idx ? { ...row, [field]: value } : row))
+        );
+    }
+
+    function addExpenseRow() {
+        setExpenseRows((prev) => [...prev, { description: "", value: "" }]);
+    }
+
+    function removeExpenseRow(idx) {
+        setExpenseRows((prev) => prev.filter((_, i) => i !== idx));
+    }
+
+    const totalExpenses = expenseRows.reduce(
+        (sum, row) => sum + (parseFloat(row.value.replace(",", ".")) || 0),
+        0
+    );
+
+    return (
+        <div className="vehicleform-wrapper">
+            <Form className="vehicleform-form p-4">
+                {/* Placa */}
+                <Form.Group as={Row} className="mb-3" controlId="plate">
+                    <Form.Label column sm={3} md={3} lg={2}>Digite a Placa <span className="text-danger">*</span></Form.Label>
+                    <Col sm={4}>
+                        <Form.Control
+                            type="text"
+                            name="plate"
+                            value={form.plate}
+                            onChange={handleChange}
+                            onBlur={handlePlateBlur}
+                            disabled={loadingPlate}
+                            placeholder="ABC1D23"
+                            required
+                        />
+                    </Col>
+                    <Col sm={2}>
+                        {loadingPlate && <Spinner animation="border" />}
+                    </Col>
+                </Form.Group>
+
+                {/* Informações do Veículo */}
+                <h5 className="mt-4">Informações do Veículo</h5>
+                <Row className="mb-3">
+                    <Col md={4}>
+                        <Form.Group controlId="brand">
+                            <Form.Label>Marca <span className="text-danger">*</span></Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="brand"
+                                value={form.brand}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={4}>
+                        <Form.Group controlId="model">
+                            <Form.Label>Modelo <span className="text-danger">*</span></Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="model"
+                                value={form.model}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={2}>
+                        <Form.Group controlId="year">
+                            <Form.Label>Ano <span className="text-danger">*</span></Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="year"
+                                value={form.year}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={2}>
+                        <Form.Group controlId="color">
+                            <Form.Label>Cor</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="color"
+                                value={form.color}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Row className="mb-3">
+                    <Col md={4}>
+                        <Form.Group controlId="fipeValue">
+                            <Form.Label>Valor Fipe</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="fipeValue"
+                                value={form.fipeValue}
+                                onChange={handleChange}
+                                disabled
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={4}>
+                        <Form.Group controlId="referenceMonth">
+                            <Form.Label>Mês de Referência</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="referenceMonth"
+                                value={form.referenceMonth}
+                                onChange={handleChange}
+                                disabled
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={4}>
+                        <Form.Group controlId="mileage">
+                            <Form.Label>Quilometragem</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="mileage"
+                                value={form.mileage}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+                    </Col>
+                </Row>
+
+                {/* Informações de Negócio */}
+                <h5 className="mt-4">Informações de Negócio</h5>
+                <Row className="mb-3">
+                    <Col md={3}>
+                        <Form.Group controlId="purchaseValue">
+                            <Form.Label>Valor de compra</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="purchaseValue"
+                                value={form.purchaseValue}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={3}>
+                        <Form.Group controlId="saleValue">
+                            <Form.Label>Valor de venda</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="saleValue"
+                                value={form.saleValue}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={3}>
+                        {/* <Form.Group controlId="tradeInValue">
+                            <Form.Label>Carro na troca</Form.Label>
+                            <Form.Control
+                                type="text"
+                                name="tradeInValue"
+                                value={form.tradeInValue}
+                                onChange={handleChange}
+                            />
+                        </Form.Group> */}
+                        <TradeInSearchSelector
+                            value={form.tradeInValue}
+                            onChange={(e) => setForm(prev => ({ ...prev, tradeInValue: e.target.value }))}
+                        />
+                    </Col>
+                    <Col md={3}>
+                        <Form.Group controlId="sold">
+                            <Form.Label>Foi vendido?</Form.Label>
+                            <Form.Select
+                                name="sold"
+                                value={form.sold}
+                                onChange={handleChange}
+                            >
+                                <option value="">Selecione</option>
+                                <option value="sim">Sim</option>
+                                <option value="nao">Não</option>
+                            </Form.Select>
+                        </Form.Group>
+                    </Col>
+                </Row>
+
+                {/* Gastos com o veículo */}
+                <h5 className="mt-4">Gastos com o veículo</h5>
+                <Table bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Descrição</th>
+                            <th>Valor (R$)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {expenseRows.map((row, idx) => (
+                            <tr key={idx}>
+                                <td>
+                                    <Form.Control
+                                        type="text"
+                                        value={row.description}
+                                        onChange={(e) => handleExpenseChange(idx, "description", e.target.value)}
+                                        placeholder="Ex: Troca de óleo"
+                                    />
+                                </td>
+                                <td>
+                                    <InputGroup>
+                                        <InputGroup.Text>R$</InputGroup.Text>
+                                        <Form.Control
+                                            type="number"
+                                            value={row.value}
+                                            onChange={(e) => handleExpenseChange(idx, "value", e.target.value)}
+                                            min={0}
+                                            step="0.01"
+                                        />
+                                    </InputGroup>
+                                </td>
+                                <td>
+                                    {expenseRows.length > 1 && (
+                                        <Button variant="danger" size="sm" onClick={() => removeExpenseRow(idx)}>Remover</Button>
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+                <Button variant="secondary" onClick={addExpenseRow}>
+                    Adicionar gasto
+                </Button>
+                <div className="mt-2"><strong>Valor total de gastos: </strong>R$ {totalExpenses.toFixed(2)}</div>
+
+                {/* Anotações gerais */}
+                <h5 className="mt-4">Anotações gerais</h5>
+                <Form.Group className="mb-3" controlId="notes">
+                    <Form.Label>Campo livre para observações</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={3}
+                        name="notes"
+                        value={form.notes}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
+
+                {/* Ações */}
+                <div className="d-flex gap-2 justify-content-end mt-4">
+                    <Button variant="success">Salvar</Button>
+                    <Button variant="outline-secondary">Cancelar</Button>
+                </div>
+            </Form>
+        </div>
+    );
+}

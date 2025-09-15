@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import VehicleGrid from '../../components/VehicleGrid/VehicleGrid';
 import Pagination from '../../components/Pagination/Pagination';
+import { useNavigate } from 'react-router-dom';
 
 import './VehicleSearchPage.css';
 
@@ -17,6 +18,7 @@ function VehicleSearchPage({ vehicleType = "Carro" }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [vehicles, setVehicles] = useState(MOCK_VEHICLES);
     const [currentPage, setCurrentPage] = useState(1);
+    const navigate = useNavigate();
 
     const filteredVehicles = vehicles.filter(vehicle =>
         vehicle.placa.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -30,13 +32,22 @@ function VehicleSearchPage({ vehicleType = "Carro" }) {
     );
 
     const handleSearch = () => setCurrentPage(1);
-    const handleEdit = (vehicle) => alert(`Editar ${vehicleType.toLowerCase()}: ${vehicle.placa}`);
+
+    const handleEdit = (vehicle) => {
+        navigate(`/edit-${vehicleType.toLowerCase()}/${vehicle.id}`);
+    };
+
     const handleDelete = (vehicle) => {
         if (window.confirm(`Excluir ${vehicleType.toLowerCase()} ${vehicle.placa}?`)) {
             setVehicles(prev => prev.filter(v => v.id !== vehicle.id));
         }
     };
+
     const handlePageChange = (page) => setCurrentPage(page);
+
+    function navigaeteToAddVehicle(vehicle) {
+        navigate(`/cad-${vehicle}`);
+    }
 
     return (
         <div className="vehicle-search-center">
@@ -51,7 +62,7 @@ function VehicleSearchPage({ vehicleType = "Carro" }) {
                             placeholder={`Digite a placa ou modelo do ${vehicleType.toLowerCase()}`}
                         />
                     </div>
-                    <button className="btn btn-success" type="button">
+                    <button className="btn btn-success" type="button" onClick={() => navigaeteToAddVehicle(vehicleType.toLowerCase())}>
                         {`Cadastrar novo ${vehicleType}`}
                     </button>
                 </div>

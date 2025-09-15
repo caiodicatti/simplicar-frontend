@@ -23,7 +23,11 @@
   --vehicle-search-bg-color: #bcc1c7;
   --vehicle-search-font-color: #000000;
 
-  --grid-row-bg-color: #efeded;
+  /* Variáveis globais de CSS para temas de página */
+  --content-pages-bg-default: #ffffff;
+  --content-pages-boxshadow-default: 0 6px 24px rgba(0, 0, 0, 0.11);
+
+  --grid-row-bg-color: #bcc1c747;
   --grid-row-font-color: #000000;
 }
 
@@ -36,6 +40,9 @@
 
   --grid-row-bg-color: #767676;
   --grid-row-font-color: #ffffff;
+
+  --content-pages-bg-default: #353535;
+  --content-pages-boxshadow-default: 0 6px 24px rgba(0, 0, 0, 0.55);
 }
 
 a {
@@ -52,8 +59,9 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  height: 100vh;
   min-height: 100vh;
+  background-color: red;
 }
 
 h1 {

@@ -41,9 +41,10 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
     function handlePlateBlur() {
         if (form.plate.trim()) {
             setLoadingPlate(true);
+            var type = vehicleType.toLowerCase() === 'carro' ? 'car' : 'moto';
 
             // Simulação de chamada à API
-            apiMock.getVehicleByPlate(form.plate.trim().toUpperCase())
+            apiMock.getVehicleByPlate(form.plate.trim().toUpperCase(), type)
                 .then(data => {
                     if (data) {
                         setForm(data)

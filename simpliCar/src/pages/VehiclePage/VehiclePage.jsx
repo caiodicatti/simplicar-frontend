@@ -21,7 +21,8 @@ export default function VehiclePage({ vehicleType = "", mode = "edit" }) {
 
     useEffect(() => {
         if (mode === "edit" && id) {
-            apiMock.getVehicleById(Number(id))
+            var type = vehicleType.toLowerCase() === 'carro' ? 'car' : 'moto';
+            apiMock.getVehicleById(Number(id), type)
                 .then(data => setVehicleData(data));
         }
     }, [id, mode]);

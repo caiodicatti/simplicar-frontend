@@ -16,7 +16,8 @@ function VehicleSearchPage({ vehicleType = "Carro" }) {
 
     useEffect(() => {
         async function fetchVehicles() {
-            const vehiclesData = await apiMock.getVehicles();
+            var type = vehicleType.toLowerCase() === 'carro' ? 'car' : 'moto';
+            const vehiclesData = await apiMock.getVehicles(type);
             const mapped = vehiclesData.map(v => ({
                 ...v,
                 placa: v.plate,
@@ -26,7 +27,7 @@ function VehicleSearchPage({ vehicleType = "Carro" }) {
             setVehicles(mapped);
         }
         fetchVehicles();
-    }, []);
+    }, [vehicleType]);
 
     const filteredVehicles = vehicles.filter(vehicle =>
         vehicle.placa.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -41,8 +42,8 @@ function VehicleSearchPage({ vehicleType = "Carro" }) {
 
     const handleSearch = async () => {
         setCurrentPage(1);
-
-        const vehiclesData = await apiMock.getVehicleByPlateOrModel(searchTerm);
+        var type = vehicleType.toLowerCase() === 'carro' ? 'car' : 'moto';
+        const vehiclesData = await apiMock.getVehicleByPlateOrModel(searchTerm, type);
         const mapped = vehiclesData.map(v => ({
             ...v,
             placa: v.plate,

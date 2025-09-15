@@ -17,7 +17,8 @@ let vehicles = [
             { description: "Troca de óleo", value: "120" },
             { description: "Pneus novos", value: "600" }
         ],
-        notes: "Carro em bom estado, único dono."
+        notes: "Carro em bom estado, único dono.",
+        type: "car"
     },
     {
         id: 2,
@@ -36,7 +37,8 @@ let vehicles = [
         expenses: [
             { description: "Revisão geral", value: "350" }
         ],
-        notes: "Pouco rodado, todas revisões feitas."
+        notes: "Pouco rodado, todas revisões feitas.",
+        type: "car"
     },
     {
         id: 3,
@@ -55,7 +57,8 @@ let vehicles = [
         expenses: [
             { description: "Troca de correia dentada", value: "350" }
         ],
-        notes: "Carro econômico."
+        notes: "Carro econômico.",
+        type: "car"
     },
     {
         id: 4,
@@ -74,7 +77,8 @@ let vehicles = [
         expenses: [
             { description: "Troca de pastilhas de freio", value: "220" }
         ],
-        notes: "Sem detalhes."
+        notes: "Sem detalhes.",
+        type: "car"
     },
     {
         id: 5,
@@ -93,7 +97,8 @@ let vehicles = [
         expenses: [
             { description: "Troca de pneus", value: "600" }
         ],
-        notes: ""
+        notes: "",
+        type: "car"
     },
     {
         id: 6,
@@ -112,7 +117,8 @@ let vehicles = [
         expenses: [
             { description: "Reparo na suspensão", value: "900" }
         ],
-        notes: "Reparo recente."
+        notes: "Reparo recente.",
+        type: "car"
     },
     {
         id: 7,
@@ -131,7 +137,8 @@ let vehicles = [
         expenses: [
             { description: "Polimento", value: "180" }
         ],
-        notes: "Sem detalhes."
+        notes: "Sem detalhes.",
+        type: "car"
     },
     {
         id: 8,
@@ -150,7 +157,8 @@ let vehicles = [
         expenses: [
             { description: "Troca de embreagem", value: "400" }
         ],
-        notes: "Carro básico."
+        notes: "Carro básico.",
+        type: "car"
     },
     {
         id: 9,
@@ -169,7 +177,8 @@ let vehicles = [
         expenses: [
             { description: "Troca de bateria", value: "320" }
         ],
-        notes: "Único dono."
+        notes: "Único dono.",
+        type: "car"
     },
     {
         id: 10,
@@ -188,29 +197,75 @@ let vehicles = [
         expenses: [
             { description: "Lavagem", value: "80" }
         ],
-        notes: "Novo."
+        notes: "Novo.",
+        type: "car"
+    },
+    // Dois registros de moto
+    {
+        id: 11,
+        plate: "MOTO1A23",
+        brand: "Honda",
+        model: "CB 500F",
+        year: "2020",
+        color: "Preto",
+        fipeValue: "28000",
+        referenceMonth: "2025-08",
+        mileage: "15000",
+        purchaseValue: "25000",
+        saleValue: "28000",
+        tradeInValue: "",
+        sold: "nao",
+        expenses: [
+            { description: "Troca de óleo", value: "100" }
+        ],
+        notes: "Moto em ótimo estado.",
+        type: "moto"
+    },
+    {
+        id: 12,
+        plate: "MOTO2B45",
+        brand: "Yamaha",
+        model: "MT-07",
+        year: "2021",
+        color: "Azul",
+        fipeValue: "35000",
+        referenceMonth: "2025-08",
+        mileage: "8000",
+        purchaseValue: "33000",
+        saleValue: "36000",
+        tradeInValue: "",
+        sold: "sim",
+        expenses: [
+            { description: "Revisão completa", value: "300" }
+        ],
+        notes: "Moto quase nova.",
+        type: "moto"
     }
 ];
 
-export function getVehicles() {
+
+export function getVehicles(type = 'car') {
     return new Promise(resolve => {
-        setTimeout(() => resolve([...vehicles]), 500);
+        setTimeout(() => {
+            const filtered = vehicles.filter(v => v.type === type);
+            resolve([...filtered]);
+        }, 500);
     });
 }
 
-export function getVehicleById(id) {
+export function getVehicleById(id, type = 'car') {
     return new Promise(resolve => {
         setTimeout(() => {
-            const found = vehicles.find(v => v.id === id);
+            const found = vehicles.find(v => v.id === id && v.type === type);
             resolve(found || null);
         }, 500);
     });
 }
 
-export function getVehicleByPlate(plate) {
+export function getVehicleByPlate(plate, type = 'car') {
     return new Promise(resolve => {
         setTimeout(() => {
-            const found = vehicles.find(v => v.plate === plate);
+            const found = vehicles.find(v => v.plate === plate && v.type === type);
 
             if (found) {
                 const {
@@ -231,21 +286,23 @@ export function getVehicleByPlate(plate) {
     });
 }
 
-export function getVehicleByPlateOrModel(search) {
+export function getVehicleByPlateOrModel(search, type = 'car') {
     return new Promise(resolve => {
         setTimeout(() => {
             const searchUpper = search.trim().toUpperCase();
 
             const found = vehicles.filter(
                 v =>
-                    v.plate.toUpperCase().includes(searchUpper) ||
-                    v.model.toUpperCase().includes(searchUpper)
+                    (v.plate.toUpperCase().includes(searchUpper) ||
+                        v.model.toUpperCase().includes(searchUpper)) &&
+                    v.type === type
             );
 
             resolve(found);
         }, 500);
     });
 }
+
 
 export function addVehicle(vehicle) {
     return new Promise(resolve => {

@@ -1,0 +1,45 @@
+.report-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+.report-table th,
+.report-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+    font-size: 15px;
+}
+
+.report-table th {
+    background: #f4f6f8;
+    color: #222;
+    font-weight: 600;
+}
+
+.report-table .no-data {
+    text-align: center;
+    color: #999;
+    font-size: 16px;
+    padding: 24px;
+}
+
+@media (max-width: 600px) {
+
+    .report-table th,
+    .report-table td {
+        padding: 7px 4px;
+        font-size: 13px;
+    }
+
+    .report-table .no-data {
+        font-size: 14px;
+        padding: 16px;
+    }
+}

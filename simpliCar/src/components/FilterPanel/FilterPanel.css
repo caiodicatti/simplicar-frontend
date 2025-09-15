@@ -1,0 +1,43 @@
+.filter-panel {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.filter-panel-item {
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+    gap: 6px;
+}
+
+.filter-panel-item label {
+    font-size: 14px;
+    color: #222;
+}
+
+.filter-panel-item input,
+.filter-panel-item select {
+    padding: 7px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+}
+
+@media (max-width: 600px) {
+    .filter-panel {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .filter-panel-item {
+        min-width: 100px;
+    }
+
+    .filter-panel-item input,
+    .filter-panel-item select {
+        font-size: 13px;
+        padding: 6px;
+    }
+}

@@ -1,0 +1,22 @@
+.export-btn {
+    background: #2e7d32;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.export-btn:hover {
+    background: #388e3c;
+}
+
+@media (max-width: 600px) {
+    .export-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}

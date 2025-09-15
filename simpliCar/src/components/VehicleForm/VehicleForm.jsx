@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Spinner, Table, InputGroup } from "react-bootstrap";
 import TradeInSearchSelector from "../TradeInSearchSelector/TradeInSearchSelector";
+import apiMock from "../../services/apiMock";
 import "./VehicleForm.css";
 
 const initialState = {
@@ -28,22 +29,32 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
     useEffect(() => {
         if (isEdit && vehicleData) {
             setForm(vehicleData); // Preenche os dados do form
+            setExpenseRows(vehicleData.expenses.length > 0 ? vehicleData.expenses : [{ description: "", value: "" }]);
         }
     }, [vehicleData, isEdit]);
 
     function handleChange(e) {
         const { name, value } = e.target;
-        setForm((prev) => ({ ...prev, [name]: value }));
-        console.log(form);
+        setForm((prev) => ({ ...prev, [name]: value.toUpperCase() }));
     }
 
     function handlePlateBlur() {
-        console.log('aqui chamará a API')
         if (form.plate.trim()) {
             setLoadingPlate(true);
-            setTimeout(() => {
-                setLoadingPlate(false);
-            }, 1200);
+
+            // Simulação de chamada à API
+            apiMock.getVehicleByPlate(form.plate.trim().toUpperCase())
+                .then(data => {
+                    if (data) {
+                        setForm(data)
+                    } else {
+                        setForm(prev => ({
+                            ...initialState,
+                            plate: prev.plate,
+                        }));
+                    }
+                    setLoadingPlate(false);
+                });
         }
     }
 
@@ -82,6 +93,7 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
                             disabled={loadingPlate}
                             placeholder="ABC1D23"
                             required
+                            maxLength={7}
                         />
                     </Col>
                     <Col sm={2}>

@@ -1,6 +1,8 @@
 import VehicleForm from "../../components/VehicleForm/VehicleForm";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import apiMock from '../../services/apiMock';
+
 
 import "./VehiclePage.css";
 
@@ -8,11 +10,18 @@ export default function VehiclePage({ vehicleType = "", mode = "edit" }) {
     const { id } = useParams();
     const [vehicleData, setVehicleData] = useState(null);
 
+    // useEffect(() => {
+    //     if (mode === "edit" && id) {
+    //         // Aqui você chama sua API para buscar os dados pelo id
+    //         fetch(`/api/vehicle/${id}`)
+    //             .then(res => res.json())
+    //             .then(data => setVehicleData(data));
+    //     }
+    // }, [id, mode]);
+
     useEffect(() => {
         if (mode === "edit" && id) {
-            // Aqui você chama sua API para buscar os dados pelo id
-            fetch(`/api/vehicle/${id}`)
-                .then(res => res.json())
+            apiMock.getVehicleById(Number(id))
                 .then(data => setVehicleData(data));
         }
     }, [id, mode]);

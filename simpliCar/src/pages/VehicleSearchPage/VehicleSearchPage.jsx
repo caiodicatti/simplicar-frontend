@@ -1,24 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchInput from '../../components/SearchInput/SearchInput';
 import VehicleGrid from '../../components/VehicleGrid/VehicleGrid';
 import Pagination from '../../components/Pagination/Pagination';
+import apiMock from '../../services/apiMock';
 import { useNavigate } from 'react-router-dom';
-
 import './VehicleSearchPage.css';
 
-const MOCK_VEHICLES = [
-    { id: 1, placa: "PlacaABC", modelo: "Modelo A", cor: "Preto" },
-    { id: 2, placa: "PlacaABD", modelo: "Modelo B", cor: "Branco" },
-    { id: 3, placa: "PlacaABR", modelo: "Modelo C", cor: "Azul" },
-];
-
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 5;
 
 function VehicleSearchPage({ vehicleType = "Carro" }) {
     const [searchTerm, setSearchTerm] = useState('');
-    const [vehicles, setVehicles] = useState(MOCK_VEHICLES);
+    const [vehicles, setVehicles] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        async function fetchVehicles() {
+            const vehiclesData = await apiMock.getVehicles();
+            const mapped = vehiclesData.map(v => ({
+                ...v,
+                placa: v.plate,
+                modelo: v.model,
+                cor: v.color
+            }));
+            setVehicles(mapped);
+        }
+        fetchVehicles();
+    }, []);
 
     const filteredVehicles = vehicles.filter(vehicle =>
         vehicle.placa.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -31,7 +39,19 @@ function VehicleSearchPage({ vehicleType = "Carro" }) {
         currentPage * PAGE_SIZE
     );
 
-    const handleSearch = () => setCurrentPage(1);
+    const handleSearch = async () => {
+        setCurrentPage(1);
+
+        const vehiclesData = await apiMock.getVehicleByPlateOrModel(searchTerm);
+        const mapped = vehiclesData.map(v => ({
+            ...v,
+            placa: v.plate,
+            modelo: v.model,
+            cor: v.color
+        }));
+
+        setVehicles(mapped);
+    };
 
     const handleEdit = (vehicle) => {
         navigate(`/edit-${vehicleType.toLowerCase()}/${vehicle.id}`);

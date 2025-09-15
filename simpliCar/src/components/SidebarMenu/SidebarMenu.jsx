@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
-import { FaCar, FaMotorcycle, FaBars, FaCog, FaHome } from "react-icons/fa";
+import { FaCar, FaMotorcycle, FaBars, FaCog, FaHome, FaChartBar, FaReceipt, FaClipboardList } from "react-icons/fa";
 import "./SidebarMenu.css";
 
 export default function SidebarMenu() {
@@ -10,7 +10,7 @@ export default function SidebarMenu() {
     return (
         <Sidebar
             collapsed={collapsed}
-            width="220px"
+            width="270px"
             collapsedWidth="60px"
             className="pro-sidebar"
         >
@@ -50,6 +50,26 @@ export default function SidebarMenu() {
                         </MenuItem>
                         <MenuItem icon={<FaMotorcycle />} className="pro-menu-item" component={<Link to="/motos" />}>
                             Motos
+                        </MenuItem>
+                    </SubMenu>
+                )}
+
+                {!collapsed && (
+                    <SubMenu
+                        label="Relatórios"
+                        style={{
+                            fontSize: "17px",
+                            borderBottom: "1px solid rgba(0, 0, 0, 0.13)"
+                        }}
+                    >
+                        <MenuItem icon={<FaChartBar />} className="pro-menu-item" component={<Link to="/relatorio-financeiro" />}>
+                            Resultado Financeiro
+                        </MenuItem>
+                        <MenuItem icon={<FaReceipt />} className="pro-menu-item" component={<Link to="/relatorio-despesa-veiculo" />}>
+                            Despesas por Veículo
+                        </MenuItem>
+                        <MenuItem icon={<FaClipboardList />} className="pro-menu-item" component={<Link to="/relatorio-inventario" />}>
+                            Inventário de Veículos
                         </MenuItem>
                     </SubMenu>
                 )}

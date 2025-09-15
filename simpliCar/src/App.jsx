@@ -5,6 +5,9 @@ import ProtectedRoute from "./ProtectedRoute";
 import ProtectedLayout from "./layouts/ProtectedLayout/ProtectedLayout";
 import VehicleSearchPage from "./pages/VehicleSearchPage/VehicleSearchPage";
 import VehiclePage from "./pages/VehiclePage/VehiclePage";
+import FinancialReport from "./pages/FinancialReport/FinancialReport";
+import InventoryReport from "./pages/InventoryReport/InventoryReport";
+import VehicleExpenseReport from "./pages/VehicleExpenseReport/VehicleExpenseReport";
 
 import SidebarMenu from "./components/SidebarMenu/SidebarMenu";
 
@@ -85,6 +88,39 @@ export default function App() {
           <ProtectedRoute>
             <ProtectedLayout>
               <VehiclePage vehicleType="Moto" mode="edit" />
+            </ProtectedLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/relatorio-financeiro"
+        element={
+          <ProtectedRoute>
+            <ProtectedLayout>
+              <FinancialReport />
+            </ProtectedLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/relatorio-despesa-veiculo"
+        element={
+          <ProtectedRoute>
+            <ProtectedLayout>
+              <VehicleExpenseReport />
+            </ProtectedLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/relatorio-inventario"
+        element={
+          <ProtectedRoute>
+            <ProtectedLayout>
+              <InventoryReport />
             </ProtectedLayout>
           </ProtectedRoute>
         }

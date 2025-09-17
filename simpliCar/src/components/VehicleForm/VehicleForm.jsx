@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Spinner, Table, InputGroup } from "react-bootstrap";
 import TradeInSearchSelector from "../TradeInSearchSelector/TradeInSearchSelector";
-import { formatCurrency, formatDate, formatNumber } from "../../utils/formatters";
+import { formatCurrency, formatDate, formatNumber, normalizeCurrencyInput, parseCurrencyString } from "../../utils/formatters";
+import FormattedInput from "../FormattedInput/FormattedInput";
 import apiMock from "../../services/apiMock";
 import "./VehicleForm.css";
 
@@ -30,7 +31,12 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
 
     useEffect(() => {
         if (isEdit && vehicleData) {
-            setForm(vehicleData); // Preenche os dados do form
+            setForm({
+                ...vehicleData,
+                purchaseValue: formatCurrency(vehicleData.purchaseValue),
+                saleValue: formatCurrency(vehicleData.saleValue),
+                mileage: formatNumber(vehicleData.mileage),
+            });
             setExpenseRows(vehicleData.expenses.length > 0 ? vehicleData.expenses : [{ description: "", value: "" }]);
         }
     }, [vehicleData, isEdit]);
@@ -76,7 +82,7 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
     }
 
     const totalExpenses = expenseRows.reduce(
-        (sum, row) => sum + (parseFloat(row.value.replace(",", ".")) || 0),
+        (sum, row) => sum + parseCurrencyString(row.value),
         0
     );
 
@@ -183,11 +189,13 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
                     <Col md={4}>
                         <Form.Group controlId="mileage">
                             <Form.Label>Quilometragem</Form.Label>
-                            <Form.Control
-                                type="text"
+                            <FormattedInput
                                 name="mileage"
                                 value={form.mileage}
                                 onChange={handleChange}
+                                formatFn={formatNumber}
+                                normalizeFn={val => val.replace(/\D/g, "")}
+                                className="form-control"
                             />
                         </Form.Group>
                     </Col>
@@ -199,22 +207,26 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
                     <Col md={4}>
                         <Form.Group controlId="purchaseValue">
                             <Form.Label>Valor de compra</Form.Label>
-                            <Form.Control
-                                type="text"
+                            <FormattedInput
                                 name="purchaseValue"
                                 value={form.purchaseValue}
                                 onChange={handleChange}
+                                formatFn={formatCurrency}
+                                normalizeFn={normalizeCurrencyInput}
+                                className="form-control"
                             />
                         </Form.Group>
                     </Col>
                     <Col md={4}>
                         <Form.Group controlId="saleValue">
                             <Form.Label>Valor de venda</Form.Label>
-                            <Form.Control
-                                type="text"
+                            <FormattedInput
                                 name="saleValue"
                                 value={form.saleValue}
                                 onChange={handleChange}
+                                formatFn={formatCurrency}
+                                normalizeFn={normalizeCurrencyInput}
+                                className="form-control"
                             />
                         </Form.Group>
                     </Col>
@@ -273,13 +285,14 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
                                 </td>
                                 <td>
                                     <InputGroup>
-                                        <InputGroup.Text>R$</InputGroup.Text>
-                                        <Form.Control
-                                            type="number"
+                                        <FormattedInput
+                                            type="text"
+                                            name="value"
                                             value={row.value}
-                                            onChange={(e) => handleExpenseChange(idx, "value", e.target.value)}
-                                            min={0}
-                                            step="0.01"
+                                            onChange={e => handleExpenseChange(idx, "value", e.target.value)}
+                                            formatFn={formatCurrency}
+                                            normalizeFn={normalizeCurrencyInput}
+                                            className="form-control"
                                         />
                                     </InputGroup>
                                 </td>
@@ -295,7 +308,7 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
                 <Button variant="secondary" onClick={addExpenseRow}>
                     Adicionar gasto
                 </Button>
-                <div className="mt-2"><strong>Valor total de gastos: </strong>R$ {totalExpenses.toFixed(2)}</div>
+                <div className="mt-2"><strong>Valor total de gastos: </strong>{formatCurrency(totalExpenses.toString())}</div>
 
                 {/* Anotações gerais */}
                 <h5 className="mt-4">Anotações gerais</h5>

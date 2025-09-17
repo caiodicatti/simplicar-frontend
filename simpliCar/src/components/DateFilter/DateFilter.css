@@ -32,12 +32,23 @@
 
 @media (max-width: 600px) {
     .date-filter {
-        flex-direction: column;
+        flex-direction: row;
         gap: 10px;
+        width: 100%;
     }
 
     .date-filter .form-group {
-        flex: 1 1 100%;
+        flex: unset;
         min-width: 0;
+        max-width: none;
+        width: 100%;
+    }
+
+    .date-filter input[type="date"] {
+        width: 100%;
+    }
+
+    .search-btn {
+        width: 100%;
     }
 }

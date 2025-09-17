@@ -37,7 +37,14 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
                 saleValue: formatCurrency(vehicleData.saleValue),
                 mileage: formatNumber(vehicleData.mileage),
             });
-            setExpenseRows(vehicleData.expenses.length > 0 ? vehicleData.expenses : [{ description: "", value: "" }]);
+            setExpenseRows(
+                vehicleData.expenses.length > 0
+                    ? vehicleData.expenses.map(e => ({
+                        ...e,
+                        value: formatCurrency(e.value)
+                    }))
+                    : [{ description: "", value: "" }]
+            );
         }
     }, [vehicleData, isEdit]);
 

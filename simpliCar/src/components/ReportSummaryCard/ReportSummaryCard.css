@@ -1,13 +1,15 @@
 .report-summary-card {
     background: #f4f6f8;
     border-radius: 8px;
-    padding: 20px 24px;
+    padding: 16px 20px;
     min-width: 120px;
     text-align: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
     gap: 8px;
+    flex: 1 1 0;
+    max-width: 220px;
 }
 
 .report-summary-title {
@@ -20,12 +22,43 @@
     font-size: 22px;
     color: #222;
     font-weight: 600;
+    white-space: nowrap;
+
 }
 
+.report-summary-cards {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.report-summary-cards:has(.report-summary-card:only-child) {
+    justify-content: flex-start;
+}
+
+@media (min-width: 601px) {
+    .report-summary-cards:has(.report-summary-card:only-child) .report-summary-card {
+        max-width: 320px;
+    }
+}
+
+/* Quebra 3 por linha até 1024px */
+@media (max-width: 1024px) {
+    .report-summary-card {
+        flex: 1 1 30%;
+        max-width: 32%;
+    }
+}
+
+/* Empilha no mobile */
 @media (max-width: 600px) {
     .report-summary-card {
         min-width: 100px;
         padding: 16px 10px;
+        flex: 1 1 100%;
+        max-width: 100%;
     }
 
     .report-summary-title {

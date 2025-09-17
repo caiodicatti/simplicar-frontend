@@ -32,6 +32,7 @@ export function formatNumber(value) {
 // Trata diferentes separadores decimais e remove caracteres extras
 export function normalizeCurrencyInput(val) {
     if (!val) return "";
+    val = String(val);
 
     let sanitized = val.replace(/[^\d.,]/g, "");
     if (sanitized.includes('.') && sanitized.includes(',')) {

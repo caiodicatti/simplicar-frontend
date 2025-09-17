@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
-import { FaCar, FaMotorcycle, FaBars, FaCog, FaHome, FaChartBar, FaReceipt, FaClipboardList } from "react-icons/fa";
+import { FaCar, FaMotorcycle, FaBars, FaCog, FaHome, FaChartBar, FaReceipt, FaClipboardList, FaCalendarAlt } from "react-icons/fa";
 import "./SidebarMenu.css";
 
 export default function SidebarMenu() {
@@ -67,6 +67,9 @@ export default function SidebarMenu() {
                         </MenuItem>
                         <MenuItem icon={<FaReceipt />} className="pro-menu-item" component={<Link to="/relatorio-despesa-veiculo" />}>
                             Despesas por Veículo
+                        </MenuItem>
+                        <MenuItem icon={<FaCalendarAlt />} className="pro-menu-item" component={<Link to="/relatorio-despesa-periodo" />}>
+                            Despesas por Período
                         </MenuItem>
                         <MenuItem icon={<FaClipboardList />} className="pro-menu-item" component={<Link to="/relatorio-inventario" />}>
                             Inventário de Veículos

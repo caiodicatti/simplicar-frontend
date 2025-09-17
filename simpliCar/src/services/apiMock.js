@@ -18,7 +18,8 @@ let vehicles = [
             { description: "Pneus novos", value: "600" }
         ],
         notes: "Carro em bom estado, único dono.",
-        type: "car"
+        type: "car",
+        dtCreated: "2025-08-10"
     },
     {
         id: 2,
@@ -38,7 +39,8 @@ let vehicles = [
             { description: "Revisão geral", value: "350" }
         ],
         notes: "Pouco rodado, todas revisões feitas.",
-        type: "car"
+        type: "car",
+        dtCreated: "2025-08-15"
     },
     {
         id: 3,
@@ -58,7 +60,8 @@ let vehicles = [
             { description: "Troca de correia dentada", value: "350" }
         ],
         notes: "Carro econômico.",
-        type: "car"
+        type: "car",
+        dtCreated: "2025-08-20"
     },
     {
         id: 4,
@@ -78,7 +81,8 @@ let vehicles = [
             { description: "Troca de pastilhas de freio", value: "220" }
         ],
         notes: "Sem detalhes.",
-        type: "car"
+        type: "car",
+        dtCreated: "2025-08-25"
     },
     {
         id: 5,
@@ -98,7 +102,8 @@ let vehicles = [
             { description: "Troca de pneus", value: "600" }
         ],
         notes: "",
-        type: "car"
+        type: "car",
+        dtCreated: "2025-09-01"
     },
     {
         id: 6,
@@ -118,7 +123,8 @@ let vehicles = [
             { description: "Reparo na suspensão", value: "900" }
         ],
         notes: "Reparo recente.",
-        type: "car"
+        type: "car",
+        dtCreated: "2025-09-05"
     },
     {
         id: 7,
@@ -138,7 +144,8 @@ let vehicles = [
             { description: "Polimento", value: "180" }
         ],
         notes: "Sem detalhes.",
-        type: "car"
+        type: "car",
+        dtCreated: "2025-09-08"
     },
     {
         id: 8,
@@ -158,7 +165,8 @@ let vehicles = [
             { description: "Troca de embreagem", value: "400" }
         ],
         notes: "Carro básico.",
-        type: "car"
+        type: "car",
+        dtCreated: "2025-09-10"
     },
     {
         id: 9,
@@ -178,7 +186,8 @@ let vehicles = [
             { description: "Troca de bateria", value: "320" }
         ],
         notes: "Único dono.",
-        type: "car"
+        type: "car",
+        dtCreated: "2025-09-12"
     },
     {
         id: 10,
@@ -198,7 +207,8 @@ let vehicles = [
             { description: "Lavagem", value: "80" }
         ],
         notes: "Novo.",
-        type: "car"
+        type: "car",
+        dtCreated: "2025-09-14"
     },
     // Dois registros de moto
     {
@@ -219,7 +229,8 @@ let vehicles = [
             { description: "Troca de óleo", value: "100" }
         ],
         notes: "Moto em ótimo estado.",
-        type: "moto"
+        type: "moto",
+        dtCreated: "2025-09-15"
     },
     {
         id: 12,
@@ -239,7 +250,8 @@ let vehicles = [
             { description: "Revisão completa", value: "300" }
         ],
         notes: "Moto quase nova.",
-        type: "moto"
+        type: "moto",
+        dtCreated: "2025-09-15"
     }
 ];
 
@@ -323,4 +335,38 @@ export function deleteVehicle(id) {
     });
 }
 
-export default { getVehicles, addVehicle, deleteVehicle, getVehicleById, getVehicleByPlate, getVehicleByPlateOrModel };
+export function getFinancialSummary(startDate, endDate, type = null) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            let filtered = vehicles.filter(v => {
+                return (
+                    v.dtCreated >= startDate &&
+                    v.dtCreated <= endDate &&
+                    (!type || v.type === type)
+                );
+            });
+
+            const totalComprados = filtered.length;
+            const totalVendidos = filtered.filter(v => v.sold === "sim").length;
+            const valorCompras = filtered.reduce((acc, v) => acc + Number(v.purchaseValue), 0);
+            const valorVendas = filtered.filter(v => v.sold === "sim").reduce((acc, v) => acc + Number(v.saleValue), 0);
+            const valorDespesas = filtered.reduce(
+                (acc, v) => acc + v.expenses.reduce((sum, e) => sum + Number(e.value), 0),
+                0
+            );
+            const lucroBruto = valorVendas - valorCompras - valorDespesas;
+
+            resolve({
+                totalComprados,
+                totalVendidos,
+                valorCompras,
+                valorVendas,
+                valorDespesas,
+                lucroBruto,
+                listaVeiculos: filtered
+            });
+        }, 500);
+    });
+}
+
+export default { getVehicles, addVehicle, deleteVehicle, getVehicleById, getVehicleByPlate, getVehicleByPlateOrModel, getFinancialSummary };

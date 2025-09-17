@@ -1,6 +1,6 @@
-.inventory-report-page {
+.period-expense-report-page {
     width: 100%;
-    max-width: 900px;
+    max-width: 1250px;
     margin: 40px auto 0 auto;
     background: var(--content-pages-bg-default);
     color: var(--vehicle-search-font-color);
@@ -10,7 +10,7 @@
     box-sizing: border-box;
 }
 
-.inventory-filters-row {
+.filters-row {
     display: flex;
     gap: 16px;
     align-items: flex-end;
@@ -18,31 +18,27 @@
     flex-wrap: wrap;
 }
 
-.inventory-filter-group {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 170px;
-    min-width: 170px;
-}
-
-.inventory-filter-group label {
-    font-weight: 500;
-    margin-bottom: 6px;
-    display: block;
-    color: #222;
-}
-
-.inventory-select {
-    min-width: 170px;
-    font-size: 1rem;
-}
-
-.inventory-search-btn {
+.filters-row .search-btn {
     flex: 0 0 auto;
     min-width: 120px;
     margin-bottom: 0;
     height: 40px;
-    align-self: flex-end;
+    /* align-self: flex-end; */
+}
+
+.filters-row label {
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.filters-row .form-group {
+    flex: 1 1 170px;
+    min-width: 170px;
+    margin-bottom: 0;
+}
+
+.search-btn {
     background: #175cd3;
     color: #fff;
     border: none;
@@ -51,53 +47,52 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.2s;
-    margin-left: 4px;
 }
 
-.inventory-search-btn:disabled {
+.search-btn:disabled {
     background: #a0aec0;
     cursor: not-allowed;
 }
 
-.inventory-search-btn:hover:not(:disabled) {
+.search-btn:hover:not(:disabled) {
     background: #174ea6;
 }
 
-.inventory-report-summary-cards {
+.report-summary-cards {
     display: flex;
     gap: 16px;
     margin: 32px 0;
 }
 
-@media (max-width: 700px) {
-    .inventory-report-page {
-        padding: 20px 8px;
+@media (max-width: 600px) {
+    .period-expense-report-page {
+        padding: 20px 8px !important;
         border-radius: 12px;
     }
 
-    .inventory-report-summary-cards {
-        flex-direction: column;
-        gap: 12px !important;
-    }
-
-    .inventory-filters-row {
+    .filters-row {
         flex-direction: column;
         gap: 10px;
         align-items: stretch;
         margin-top: 15px;
     }
 
-    .inventory-filter-group {
+    .filters-row>* {
         flex: 1 1 100%;
         min-width: 0;
         margin-bottom: 0;
     }
 
-    .inventory-search-btn {
+    .filters-row .search-btn {
         width: 100%;
         margin-left: 0;
         margin-top: 8px;
         height: 44px;
         font-size: 1.1rem;
+    }
+
+    .report-summary-cards {
+        flex-direction: column;
+        gap: 10px;
     }
 }

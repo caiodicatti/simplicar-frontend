@@ -1,36 +1,43 @@
 .date-filter {
     display: flex;
-    gap: 16px;
-    align-items: center;
-    margin-bottom: 16px;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.date-filter .form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 170px;
+    min-width: 170px;
+    max-width: 220px;
 }
 
 .date-filter label {
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
 }
 
 .date-filter input[type="date"] {
-    padding: 7px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 15px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    font-size: 1rem;
+    background: #222;
+    color: #fff;
+    outline: none;
+    margin-bottom: 0;
+    width: 210px;
 }
 
 @media (max-width: 600px) {
     .date-filter {
         flex-direction: column;
         gap: 10px;
-        align-items: stretch;
     }
 
-    .date-filter label {
-        font-size: 13px;
-    }
-
-    .date-filter input[type="date"] {
-        font-size: 13px;
-        padding: 6px;
+    .date-filter .form-group {
+        flex: 1 1 100%;
+        min-width: 0;
     }
 }

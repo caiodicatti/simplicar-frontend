@@ -2,7 +2,6 @@ import React from "react";
 import "./ReportTable.css";
 
 export default function ReportTable({ columns = [], data = [] }) {
-
     return (
         <div className="report-table-wrapper">
             <table className="report-table">
@@ -24,7 +23,11 @@ export default function ReportTable({ columns = [], data = [] }) {
                         data.map((row, rIdx) => (
                             <tr key={rIdx}>
                                 {columns.map((col, cIdx) => (
-                                    <td key={cIdx}>{row[col.key]}</td>
+                                    <td key={cIdx}>
+                                        {col.formatter
+                                            ? col.formatter(row[col.key])
+                                            : row[col.key]}
+                                    </td>
                                 ))}
                             </tr>
                         ))

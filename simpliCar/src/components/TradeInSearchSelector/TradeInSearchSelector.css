@@ -1,0 +1,11 @@
+.tradein-search-select {
+    width: 100%;
+    min-width: 0;
+    font-size: 1rem;
+}
+
+.tradein-search-select .react-select__control {
+    min-height: 38px;
+    height: 38px;
+    box-shadow: none;
+}

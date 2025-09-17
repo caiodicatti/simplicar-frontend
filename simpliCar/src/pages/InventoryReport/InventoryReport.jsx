@@ -1,57 +1,85 @@
 import React, { useState } from "react";
 import ReportSummaryCard from "../../components/ReportSummaryCard/ReportSummaryCard";
 import ReportTable from "../../components/ReportTable/ReportTable";
-import FilterPanel from "../../components/FilterPanel/FilterPanel";
 import ExportButton from "../../components/ExportButton/ExportButton";
+import Select from "react-select";
+import { getVehicles } from "../../services/apiMock";
 import "./InventoryReport.css";
 
 export default function InventoryReport() {
-    // Mock dos filtros
     const [filters, setFilters] = useState({
         tipo: "",
         status: "",
         cor: ""
     });
+    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState([]);
+    const [colorOptions, setColorOptions] = useState([{ value: "", label: "Todas as cores" }]);
 
-    // Mock das opções para filtros
     const tipoOptions = [
         { value: "", label: "Todos os tipos" },
-        { value: "hatch", label: "Hatch" },
-        { value: "sedan", label: "Sedan" },
-        { value: "suv", label: "SUV" }
-    ];
-    const statusOptions = [
-        { value: "", label: "Todos os status" },
-        { value: "vendido", label: "Vendido" },
-        { value: "estoque", label: "Em Estoque" }
-    ];
-    const corOptions = [
-        { value: "", label: "Todas as cores" },
-        { value: "preto", label: "Preto" },
-        { value: "branco", label: "Branco" },
-        { value: "vermelho", label: "Vermelho" }
+        { value: "car", label: "Carro" },
+        { value: "moto", label: "Moto" }
     ];
 
-    // Colunas da tabela (detalhada)
+    const statusOptions = [
+        { value: "", label: "Todos os status" },
+        { value: "sim", label: "Vendido" },
+        { value: "nao", label: "Em Estoque" }
+    ];
+
     const columns = [
         { key: "veiculo", label: "Veículo" },
         { key: "tipo", label: "Tipo" },
-        { key: "cor", label: "Cor" },
+        { key: "color", label: "Cor" },
         { key: "status", label: "Status" }
     ];
 
-    // Dados mock para a tabela
-    const data = [
-        { veiculo: "ABC1234 - Fiat Uno", tipo: "hatch", cor: "preto", status: "Em Estoque" },
-        { veiculo: "XYZ9876 - VW Gol", tipo: "hatch", cor: "branco", status: "Vendido" },
-        { veiculo: "DEF5678 - Honda Civic", tipo: "sedan", cor: "vermelho", status: "Em Estoque" }
-    ];
+    function formatStatus(sold) {
+        if (sold === "sim") return "Vendido";
+        if (sold === "nao") return "Em Estoque";
+        return sold;
+    }
+    function formatTipo(type) {
+        if (type === "car") return "Carro";
+        if (type === "moto") return "Moto";
+        return type;
+    }
 
-    // Quantidade de veículos vendidos e em estoque
-    const vendidos = data.filter(v => v.status === "Vendido").length;
-    const estoque = data.filter(v => v.status === "Em Estoque").length;
+    async function handleSearch() {
+        setLoading(true);
+        let vehicles = await getVehicles(filters.tipo || "car");
+        if (filters.status) {
+            vehicles = vehicles.filter(v => v.sold === filters.status);
+        }
+        if (filters.cor) {
+            vehicles = vehicles.filter(v => v.color.trim().toLowerCase() === filters.cor);
+        }
+        setData(
+            vehicles.map(v => ({
+                veiculo: `${v.plate} - ${v.brand} ${v.model}`,
+                tipo: formatTipo(v.type),
+                color: v.color,
+                status: formatStatus(v.sold)
+            }))
+        );
+        setLoading(false);
+    }
 
-    // Função para atualizar filtros
+    async function fetchColorOptions(tipo) {
+        const vehicles = await getVehicles(tipo || "car");
+        const coresUnicas = Array.from(
+            new Set(vehicles.map(v => v.color.trim().toLowerCase()))
+        );
+        return [
+            { value: "", label: "Todas as cores" },
+            ...coresUnicas.map(cor => ({
+                value: cor,
+                label: cor.charAt(0).toUpperCase() + cor.slice(1)
+            }))
+        ];
+    }
+
     function handleFilterChange(key, value) {
         setFilters(prev => ({
             ...prev,
@@ -59,23 +87,71 @@ export default function InventoryReport() {
         }));
     }
 
+    React.useEffect(() => {
+        async function getColors() {
+            const options = await fetchColorOptions(filters.tipo || "car");
+            setColorOptions(options);
+        }
+        getColors();
+    }, [filters.tipo]);
+
+    React.useEffect(() => {
+        handleSearch();
+    }, []);
+
+    const vendidos = data.filter(v => v.status === "Vendido").length;
+    const estoque = data.filter(v => v.status === "Em Estoque").length;
+
     return (
-        <div className="inventory-report-page" style={{ padding: 32 }}>
+        <div className="inventory-report-page">
             <h2>Inventário de Veículos</h2>
-            <FilterPanel
-                filters={[
-                    { key: "tipo", label: "Tipo de Veículo", type: "select", options: tipoOptions },
-                    { key: "status", label: "Status", type: "select", options: statusOptions },
-                    { key: "cor", label: "Cor", type: "select", options: corOptions }
-                ]}
-                values={filters}
-                onChange={handleFilterChange}
-            />
-            <div className="report-summary-cards" style={{ display: 'flex', gap: 16, margin: '32px 0' }}>
+            <div className="inventory-filters-row">
+                <div className="inventory-filter-group">
+                    <label>Tipo de Veículo</label>
+                    <Select
+                        className="inventory-select"
+                        options={tipoOptions}
+                        value={tipoOptions.find(opt => opt.value === filters.tipo)}
+                        onChange={opt => handleFilterChange("tipo", opt ? opt.value : "")}
+                        placeholder="Selecione"
+                        isClearable
+                    />
+                </div>
+                <div className="inventory-filter-group">
+                    <label>Status</label>
+                    <Select
+                        className="inventory-select"
+                        options={statusOptions}
+                        value={statusOptions.find(opt => opt.value === filters.status)}
+                        onChange={opt => handleFilterChange("status", opt ? opt.value : "")}
+                        placeholder="Selecione"
+                        isClearable
+                    />
+                </div>
+                <div className="inventory-filter-group">
+                    <label>Cor</label>
+                    <Select
+                        className="inventory-select"
+                        options={colorOptions}
+                        value={colorOptions.find(opt => opt.value === filters.cor)}
+                        onChange={opt => handleFilterChange("cor", opt ? opt.value : "")}
+                        placeholder="Todas as cores"
+                        isClearable
+                    />
+                </div>
+                <button
+                    className="inventory-search-btn"
+                    onClick={handleSearch}
+                    disabled={loading}
+                >
+                    {loading ? "Buscando..." : "Buscar"}
+                </button>
+            </div>
+            <div className="inventory-report-summary-cards">
                 <ReportSummaryCard title="Veículos em Estoque" value={estoque} />
                 <ReportSummaryCard title="Veículos Vendidos" value={vendidos} />
             </div>
-            <ExportButton type="excel" />
+            <ExportButton type="excel" columns={columns} data={data} fileName="inventario-veiculos.xlsx" />
             <div style={{ marginTop: 32 }}>
                 <ReportTable columns={columns} data={data} />
             </div>

@@ -1,54 +1,46 @@
 import React, { useState } from "react";
-import DateFilter from "../../components/DateFilter/DateFilter";
-import FilterPanel from "../../components/FilterPanel/FilterPanel";
+import VehicleSearchFilter from "../../components/VehicleSearchFilter/VehicleSearchFilter";
 import ReportSummaryCard from "../../components/ReportSummaryCard/ReportSummaryCard";
 import ReportTable from "../../components/ReportTable/ReportTable";
 import ExportButton from "../../components/ExportButton/ExportButton";
+import { formatCurrency, formatDate } from "../../utils/formatters";
+import { getVehicleByPlateOrModel } from "../../services/apiMock";
 import "./VehicleExpenseReport.css";
 
 export default function VehicleExpenseReport() {
-    // Mock dos filtros
     const [filters, setFilters] = useState({
-        startDate: "",
-        endDate: "",
         veiculo: ""
     });
+    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState([]);
+    const [totalDespesas, setTotalDespesas] = useState(0);
 
-    // Mock das opções para o filtro de veículo
-    const veiculoOptions = [
-        { value: "", label: "Todos" },
-        { value: "ABC1234", label: "ABC1234 - Fiat Uno" },
-        { value: "XYZ9876", label: "XYZ9876 - VW Gol" }
-    ];
-
-    // Exemplo de colunas para a tabela
     const columns = [
-        { key: "veiculo", label: "Veículo" },
-        { key: "tipoDespesa", label: "Tipo de Despesa" },
-        { key: "valor", label: "Valor (R$)" },
-        { key: "data", label: "Data" }
+        { key: "description", label: "Despesa" },
+        { key: "value", label: "Valor (R$)", formatter: formatCurrency },
+        { key: "data", label: "Data", formatter: formatDate }
     ];
 
-    // Dados mock para a tabela
-    const data = [
-        {
-            veiculo: "ABC1234 - Fiat Uno",
-            tipoDespesa: "Manutenção",
-            valor: 350.00,
-            data: "2025-08-10"
-        },
-        {
-            veiculo: "XYZ9876 - VW Gol",
-            tipoDespesa: "IPVA",
-            valor: 800.00,
-            data: "2025-07-05"
+    async function handleSearch() {
+        setLoading(true);
+        const found = await getVehicleByPlateOrModel(filters.veiculo, "car");
+        if (found && found.length > 0) {
+            const vehicle = found[0];
+            const expenses = (vehicle.expenses || []).map(e => ({
+                ...e,
+                data: vehicle.dtCreated
+            }));
+            setData(expenses);
+            setTotalDespesas(
+                expenses.reduce((acc, curr) => acc + Number(curr.value), 0)
+            );
+        } else {
+            setData([]);
+            setTotalDespesas(0);
         }
-    ];
+        setLoading(false);
+    }
 
-    // Exemplo de valor total das despesas no período
-    const totalDespesas = data.reduce((acc, curr) => acc + curr.valor, 0);
-
-    // Função para atualizar filtros
     function handleFilterChange(key, value) {
         setFilters(prev => ({
             ...prev,
@@ -57,29 +49,35 @@ export default function VehicleExpenseReport() {
     }
 
     return (
-        <div className="vehicle-expense-report-page" style={{ padding: 32 }}>
+        <div className="vehicle-expense-report-page">
             <h2>Relatório de Despesas por Veículo</h2>
-            <DateFilter
-                startDate={filters.startDate}
-                endDate={filters.endDate}
-                onChange={(startDate, endDate) => handleFilterChange("startDate", startDate) || handleFilterChange("endDate", endDate)}
-            />
-            <FilterPanel
-                filters={[
-                    {
-                        key: "veiculo",
-                        label: "Veículo",
-                        type: "select",
-                        options: veiculoOptions
-                    }
-                ]}
-                values={filters}
-                onChange={handleFilterChange}
-            />
-            <div className="report-summary-cards" style={{ display: 'flex', gap: 16, margin: '32px 0' }}>
-                <ReportSummaryCard title="Total de Despesas no Período" value={totalDespesas.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} />
+            <div className="filters-row-vehicle-expense">
+                <VehicleSearchFilter
+                    value={filters.veiculo}
+                    onChange={val => handleFilterChange("veiculo", val)}
+                    type="car"
+                    className="vehicle-search-select"
+                />
+                <button
+                    className="search-btn-vehicle-expense"
+                    onClick={handleSearch}
+                    disabled={loading || !filters.veiculo}
+                >
+                    {loading ? "Buscando..." : "Buscar"}
+                </button>
             </div>
-            <ExportButton type="excel" />
+            <div className="report-summary-cards">
+                <ReportSummaryCard
+                    title="Total de Despesas"
+                    value={formatCurrency(totalDespesas)}
+                />
+            </div>
+            <ExportButton
+                type="excel"
+                columns={columns}
+                data={data}
+                fileName="relatorio-despesas-veiculo.xlsx"
+            />
             <div style={{ marginTop: 32 }}>
                 <ReportTable columns={columns} data={data} />
             </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col, Spinner, Table, InputGroup } from "react-bootstrap";
 import TradeInSearchSelector from "../TradeInSearchSelector/TradeInSearchSelector";
+import { formatCurrency, formatDate, formatNumber } from "../../utils/formatters";
 import apiMock from "../../services/apiMock";
 import "./VehicleForm.css";
 
@@ -19,6 +20,7 @@ const initialState = {
     sold: "",
     expenses: [],
     notes: "",
+    tradeInLabel: "",
 };
 
 export default function VehicleForm({ vehicleType = "", vehicleData = null, isEdit = false }) {
@@ -160,7 +162,7 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
                             <Form.Control
                                 type="text"
                                 name="fipeValue"
-                                value={form.fipeValue}
+                                value={formatCurrency(form.fipeValue)}
                                 onChange={handleChange}
                                 disabled
                             />
@@ -194,7 +196,7 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
                 {/* Informações de Negócio */}
                 <h5 className="mt-4">Informações de Negócio</h5>
                 <Row className="mb-3">
-                    <Col md={3}>
+                    <Col md={4}>
                         <Form.Group controlId="purchaseValue">
                             <Form.Label>Valor de compra</Form.Label>
                             <Form.Control
@@ -205,7 +207,7 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
                             />
                         </Form.Group>
                     </Col>
-                    <Col md={3}>
+                    <Col md={4}>
                         <Form.Group controlId="saleValue">
                             <Form.Label>Valor de venda</Form.Label>
                             <Form.Control
@@ -216,22 +218,7 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
                             />
                         </Form.Group>
                     </Col>
-                    <Col md={3}>
-                        {/* <Form.Group controlId="tradeInValue">
-                            <Form.Label>Carro na troca</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="tradeInValue"
-                                value={form.tradeInValue}
-                                onChange={handleChange}
-                            />
-                        </Form.Group> */}
-                        <TradeInSearchSelector
-                            value={form.tradeInValue}
-                            onChange={(e) => setForm(prev => ({ ...prev, tradeInValue: e.target.value }))}
-                        />
-                    </Col>
-                    <Col md={3}>
+                    <Col md={4}>
                         <Form.Group controlId="sold">
                             <Form.Label>Foi vendido?</Form.Label>
                             <Form.Select
@@ -244,6 +231,22 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
                                 <option value="nao">Não</option>
                             </Form.Select>
                         </Form.Group>
+                    </Col>
+                </Row>
+
+                <Row className="mb-3">
+                    <Col md={8}>
+                        <TradeInSearchSelector
+                            value={form.tradeInValue && form.tradeInLabel
+                                ? { value: form.tradeInValue, label: form.tradeInLabel }
+                                : null}
+                            onChange={e => setForm(prev => ({
+                                ...prev,
+                                tradeInValue: e.target.value,
+                                tradeInLabel: e.target.label
+                            }))}
+                            className="tradein-search-select"
+                        />
                     </Col>
                 </Row>
 

@@ -1,0 +1,20 @@
+.vehicle-search-filter {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 170px;
+    min-width: 170px;
+    position: relative;
+}
+
+.options-dropdown {
+    position: absolute;
+    top: 62px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    z-index: 10;
+    max-height: 240px;
+    overflow-y: auto;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+}

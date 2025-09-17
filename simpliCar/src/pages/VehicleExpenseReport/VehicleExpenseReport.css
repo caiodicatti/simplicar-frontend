@@ -1,6 +1,6 @@
 .vehicle-expense-report-page {
     width: 100%;
-    max-width: 900px;
+    max-width: 1250px;
     margin: 40px auto 0 auto;
     background: var(--content-pages-bg-default);
     color: var(--vehicle-search-font-color);
@@ -10,14 +10,118 @@
     box-sizing: border-box;
 }
 
-@media (max-width: 700px) {
+.filters-row-vehicle-expense {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    margin-bottom: 24px;
+}
+
+.vehicle-search-select {
+    min-width: 380px;
+    flex: 1 1 350px;
+    font-size: 1rem;
+}
+
+
+.filters-row-vehicle-expense .vehicle-search-filter {
+    flex: 1 1 300px;
+    min-width: 220px;
+    margin-bottom: 0;
+}
+
+.filters-row-vehicle-expense .search-btn-vehicle-expense {
+    flex: 0 0 auto;
+    min-width: 120px;
+    margin-bottom: 0;
+    height: 40px;
+    margin-left: 0;
+}
+
+.filters-row-vehicle-expense label {
+    font-weight: 500;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.filters-row-vehicle-expense .form-group {
+    margin-bottom: 0;
+}
+
+.search-btn-vehicle-expense {
+    background: #175cd3;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    min-width: 120px;
+    height: 40px;
+    align-self: flex-end;
+    margin-left: 0;
+}
+
+.search-btn-vehicle-expense:disabled {
+    background: #a0aec0;
+    cursor: not-allowed;
+}
+
+.search-btn-vehicle-expense:hover:not(:disabled) {
+    background: #174ea6;
+}
+
+.report-summary-cards {
+    display: flex;
+    gap: 16px;
+    margin: 32px 0;
+}
+
+.search-btn-vehicle-expense.align-top {
+    align-self: anchor-center;
+}
+
+.search-btn-vehicle-expense.align-bottom {
+    align-self: flex-end;
+}
+
+@media (max-width: 600px) {
+
     .vehicle-expense-report-page {
-        padding: 20px 8px;
+        padding: 20px 8px !important;
         border-radius: 12px;
+    }
+
+    .filters-row-vehicle-expense {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+        margin-top: 15px;
+    }
+
+    .filters-row-vehicle-expense>* {
+        flex: 1 1 100%;
+        min-width: 0;
+        margin-bottom: 0;
+    }
+
+    .filters-row-vehicle-expense .search-btn-vehicle-expense {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 8px;
+        height: 44px;
+        font-size: 1.1rem;
     }
 
     .report-summary-cards {
         flex-direction: column;
-        gap: 12px !important;
+        gap: 10px;
+    }
+
+    .vehicle-search-select {
+        min-width: 340px;
+        flex: 1 1 350px;
+        font-size: 1rem;
     }
 }

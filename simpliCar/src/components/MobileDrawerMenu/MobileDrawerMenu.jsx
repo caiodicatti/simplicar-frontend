@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { slide as Menu } from "react-burger-menu";
-import { FaBars, FaCar, FaMotorcycle, FaHome, FaCog, FaChartBar, FaReceipt, FaClipboardList } from "react-icons/fa";
+import { FaBars, FaCar, FaMotorcycle, FaHome, FaCog, FaChartBar, FaReceipt, FaClipboardList, FaCalendarAlt } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import "./MobileDrawerMenu.css";
 
@@ -10,21 +10,21 @@ export default function MobileDrawerMenu() {
     const [openConfig, setOpenConfig] = useState(false);
     const [openRelatorios, setOpenRelatorios] = useState(false);
 
-    // Detect rota para highlight
     const location = useLocation();
 
-    // Fechar ao clicar em hamburger se aberto
     const handleHamburgerClick = () => setIsOpen(isOpen ? false : true);
 
-    // Fechar ao clicar em link ou fora
     const closeMenu = () => setIsOpen(false);
 
-    // Highlight route
     const isCarros = location.pathname === "/carros";
     const isMotos = location.pathname === "/motos";
     const isHome = location.pathname === "/home";
     const isUsuarios = location.pathname === "/carros";
     const isQualquer = location.pathname === "/motos";
+    const isFinanceiro = location.pathname === "/relatorio-financeiro";
+    const isDespVeiculo = location.pathname === "/relatorio-despesa-veiculo";
+    const isDespPeriodo = location.pathname === "/relatorio-despesa-periodo";
+    const isInventario = location.pathname === "/relatorio-inventario";
 
     return (
         <>
@@ -93,21 +93,28 @@ export default function MobileDrawerMenu() {
                             <Link
                                 to="/relatorio-financeiro"
                                 onClick={closeMenu}
-                                className="bm-submenu-items-link"
+                                className={`bm-submenu-items-link ${isFinanceiro ? "active" : ""}`}
                             >
                                 <FaChartBar style={{ marginRight: 6 }} /> Resultado Financeiro
                             </Link>
                             <Link
                                 to="/relatorio-despesa-veiculo"
                                 onClick={closeMenu}
-                                className="bm-submenu-items-link"
+                                className={`bm-submenu-items-link ${isDespVeiculo ? "active" : ""}`}
                             >
                                 <FaReceipt style={{ marginRight: 6 }} /> Despesas por Veículo
                             </Link>
                             <Link
+                                to="/relatorio-despesa-periodo"
+                                onClick={closeMenu}
+                                className={`bm-submenu-items-link ${isDespPeriodo ? "active" : ""}`}
+                            >
+                                <FaCalendarAlt style={{ marginRight: 6 }} /> Despesas por Período
+                            </Link>
+                            <Link
                                 to="/relatorio-inventario"
                                 onClick={closeMenu}
-                                className="bm-submenu-items-link"
+                                className={`bm-submenu-items-link ${isInventario ? "active" : ""}`}
                             >
                                 <FaClipboardList style={{ marginRight: 6 }} /> Inventário de Veículos
                             </Link>

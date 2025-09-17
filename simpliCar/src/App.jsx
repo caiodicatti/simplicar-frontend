@@ -8,6 +8,7 @@ import VehiclePage from "./pages/VehiclePage/VehiclePage";
 import FinancialReport from "./pages/FinancialReport/FinancialReport";
 import InventoryReport from "./pages/InventoryReport/InventoryReport";
 import VehicleExpenseReport from "./pages/VehicleExpenseReport/VehicleExpenseReport";
+import PeriodExpenseReport from "./pages/PeriodExpenseReport/PeriodExpenseReport";
 
 import SidebarMenu from "./components/SidebarMenu/SidebarMenu";
 
@@ -110,6 +111,17 @@ export default function App() {
           <ProtectedRoute>
             <ProtectedLayout>
               <VehicleExpenseReport />
+            </ProtectedLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/relatorio-despesa-periodo"
+        element={
+          <ProtectedRoute>
+            <ProtectedLayout>
+              <PeriodExpenseReport />
             </ProtectedLayout>
           </ProtectedRoute>
         }

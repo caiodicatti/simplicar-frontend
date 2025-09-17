@@ -1,10 +1,9 @@
 .login-form {
-    background: #202020;
+    background: linear-gradient(112deg, #222222 0%, #282828 100%);
     padding: 2rem;
     border-radius: 8px;
     max-width: 350px;
     margin: 2rem auto;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.07);
 }
 
 .login-form div {
@@ -27,17 +26,23 @@
 
 .login-form button {
     width: 100%;
-    padding: 0.7rem;
-    border-radius: 4px;
+    padding: 0.75rem;
+    border-radius: 8px;
     border: none;
     background: var(--button-color-default);
     color: white;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.3s ease, transform 0.3s ease;
+    font-size: 1.08rem;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.13);
+    transition: background 0.3s, transform 0.15s;
 }
 
 .login-form button:hover {
     background: var(--button-color-default-hover);
-    color: white;
+    transform: translateY(-2px) scale(1.03);
+}
+
+.login-form button:active {
+    transform: scale(0.97);
 }

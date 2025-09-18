@@ -10,6 +10,7 @@ import InventoryReport from "./pages/InventoryReport/InventoryReport";
 import VehicleExpenseReport from "./pages/VehicleExpenseReport/VehicleExpenseReport";
 import PeriodExpenseReport from "./pages/PeriodExpenseReport/PeriodExpenseReport";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import UsersPage from "./pages/UsersPage/UsersPage";
 
 import SidebarMenu from "./components/SidebarMenu/SidebarMenu";
 
@@ -159,7 +160,7 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-      {/* <Route
+      <Route
         path="/configuracoes/usuarios"
         element={
           <ProtectedRoute>
@@ -169,7 +170,7 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-      <Route
+      {/* <Route
         path="/configuracoes/preferencias"
         element={
           <ProtectedRoute>
@@ -188,7 +189,7 @@ export default function App() {
             </ProtectedLayout>
           </ProtectedRoute>
         }
-      /> */}
+      />  */}
 
     </Routes>
   );

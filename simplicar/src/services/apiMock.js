@@ -372,7 +372,7 @@ export function getFinancialSummary(startDate, endDate, type = null) {
 }
 
 // ===============================================================================================  Usuários
-const usersMock = [
+let usersMock = [
     {
         id: 1,
         login: "caiodicatti",
@@ -380,6 +380,24 @@ const usersMock = [
         email: "caio@email.com",
         birthDate: "1990-01-01",
         role: "admin",
+        active: true
+    },
+    {
+        id: 2,
+        login: "joseoperador",
+        name: "José Operador",
+        email: "jose@email.com",
+        birthDate: "1985-05-21",
+        role: "operator",
+        active: true
+    },
+    {
+        id: 3,
+        login: "mariagerente",
+        name: "Maria Gerente",
+        email: "maria@email.com",
+        birthDate: "1992-11-09",
+        role: "manager",
         active: true
     }
 ];
@@ -393,7 +411,76 @@ export function saveProfile(data) {
     return new Promise(resolve => setTimeout(() => resolve(usersMock[0]), 500));
 }
 
+// ===============================================================================================  Permissões (roles)
+
+const rolesMock = [
+    {
+        key: "admin",
+        label: "Administrador",
+        details: [
+            "Acesso total ao sistema",
+            "Pode cadastrar, editar e excluir usuários",
+            "Alterar todas as configurações",
+            "Visualizar todos os relatórios"
+        ]
+    },
+    {
+        key: "manager",
+        label: "Gerente",
+        details: [
+            "Pode gerenciar recursos (carros, tarefas, etc)",
+            "Visualizar relatórios",
+            "Não pode alterar configurações do sistema",
+            "Não pode gerenciar usuários"
+        ]
+    },
+    {
+        key: "operator",
+        label: "Operador",
+        details: [
+            "Pode operar funções básicas (ex: registrar atividades)",
+            "Editar seu perfil, senha e tema",
+            "Acessar configurações pessoais",
+            "Não pode gerenciar outros usuários",
+            "Não pode visualizar relatórios do sistema"
+        ]
+    }
+];
+
+export async function getUsers(query = "") {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    if (!query) return usersMock;
+    return usersMock.filter(u =>
+        u.name.toLowerCase().includes(query.toLowerCase()) ||
+        u.login.toLowerCase().includes(query.toLowerCase())
+    );
+}
+
+export async function createUser(data) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const id = usersMock.length + 1;
+    usersMock.push({ ...data, id, active: true });
+    return id;
+};
+
+export async function updateUser(id, data) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    usersMock = usersMock.map(u => u.id === id ? { ...u, ...data } : u);
+    return true;
+};
+
+export async function toggleUserActive(id, active) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    usersMock = usersMock.map(u => u.id === id ? { ...u, active } : u);
+    return true;
+};
+
+export async function getRoles() {
+    await new Promise(resolve => setTimeout(resolve, 100));
+    return rolesMock;
+};
+
 
 // ===============================================================================================  Export
 
-export default { getVehicles, addVehicle, deleteVehicle, getVehicleById, getVehicleByPlate, getVehicleByPlateOrModel, getFinancialSummary, getCurrentUser, saveProfile };
+export default { getVehicles, addVehicle, deleteVehicle, getVehicleById, getVehicleByPlate, getVehicleByPlateOrModel, getFinancialSummary, getCurrentUser, saveProfile, getUsers, createUser, updateUser, toggleUserActive, getRoles };

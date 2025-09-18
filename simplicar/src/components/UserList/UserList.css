@@ -1,0 +1,55 @@
+.userlist-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 18px;
+}
+
+.userlist-table {
+    width: 100%;
+    min-width: 540px;
+    background: transparent;
+}
+
+.userlist-table th,
+.userlist-table td {
+    vertical-align: middle !important;
+    text-align: left;
+}
+
+.userlist-table th {
+    font-weight: 600;
+    color: #374151;
+    background: var(--content-th-bg, #f6f8fa);
+}
+
+.userlist-table td {
+    color: #222;
+    background: var(--content-td-bg, #fff);
+}
+
+.userlist-table .btn {
+    padding: 2px 8px;
+    font-size: 1.05em;
+}
+
+@media (max-width: 900px) {
+    .userlist-table {
+        min-width: 320px;
+        font-size: 0.94em;
+    }
+}
+
+@media (max-width: 600px) {
+    .userlist-table-wrapper {
+        margin-top: 6px;
+    }
+
+    .userlist-table th,
+    .userlist-table td {
+        padding: 0.35rem !important;
+    }
+
+    .userlist-hide-mobile {
+        display: none;
+    }
+}

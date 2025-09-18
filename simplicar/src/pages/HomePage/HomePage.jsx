@@ -2,11 +2,15 @@ import React from "react";
 import "./HomePage.css";
 
 const HomePage = () => {
-    const raw = localStorage.getItem("userToken");
-    const token = raw ? JSON.parse(raw) : null;
+    const session = JSON.parse(localStorage.getItem("userSession") || "{}");
+    const token = session.token;
 
     if (!token) {
-        return <div className="home-wrapper"><div className="user-card">Você não está logado.</div></div>;
+        return (
+            <div className="home-wrapper">
+                <div className="user-card">Você não está logado.</div>
+            </div>
+        );
     }
 
     return (

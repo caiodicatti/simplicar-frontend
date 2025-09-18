@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import { login } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +24,9 @@ export default function LoginPage() {
         try {
             const userData = await login(user, password);
             if (userData) {
-                localStorage.setItem("userToken", JSON.stringify(userData));
+                const session = JSON.parse(localStorage.getItem("userSession") || "{}");
+                session.token = userData;
+                localStorage.setItem("userSession", JSON.stringify(session));
                 setError('');
                 navigate('/home');
             } else {

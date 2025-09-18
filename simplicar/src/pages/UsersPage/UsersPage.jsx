@@ -5,6 +5,7 @@ import UserModal from "../../components/UserModal/UserModal";
 import PermissionDescriptionBox from "../../components/PermissionDescriptionBox/PermissionDescriptionBox";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import Pagination from '../../components/Pagination/Pagination';
+import "./UsersPage.css";
 
 const PAGE_SIZE = 2;
 
@@ -106,8 +107,8 @@ export default function UsersPage() {
     };
 
     return (
-        <div className="vehicleform-wrapper">
-            <div className="vehicleform-form p-4">
+        <div className="users-page-wrapper">
+            <div className="users-page-form p-4">
                 <h3 className="text-center mb-4">Usuários do sistema</h3>
                 <div className="d-flex align-items-center gap-2 mb-3">
                     <SearchInput

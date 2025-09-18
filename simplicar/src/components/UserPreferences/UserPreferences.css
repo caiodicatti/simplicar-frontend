@@ -1,0 +1,16 @@
+.preferences-form {
+    background: var(--content-pages-bg-default);
+    box-shadow: var(--content-pages-boxshadow-default);
+    border-radius: 14px;
+    margin-top: 32px;
+    max-width: 580px;
+    min-height: 295px;
+    margin-top: 40px;
+}
+
+
+@media (max-width: 600px) {
+    .preferences-form {
+        max-width: 98vw;
+    }
+}

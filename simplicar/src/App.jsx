@@ -11,8 +11,7 @@ import VehicleExpenseReport from "./pages/VehicleExpenseReport/VehicleExpenseRep
 import PeriodExpenseReport from "./pages/PeriodExpenseReport/PeriodExpenseReport";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import UsersPage from "./pages/UsersPage/UsersPage";
-
-import SidebarMenu from "./components/SidebarMenu/SidebarMenu";
+import PreferencesPage from "./pages/UserPreferencesPage/UserPreferencesPage";
 
 export default function App() {
   return (
@@ -170,7 +169,7 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-      {/* <Route
+      <Route
         path="/configuracoes/preferencias"
         element={
           <ProtectedRoute>
@@ -180,7 +179,7 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-      <Route
+      {/* <Route
         path="/configuracoes/senha"
         element={
           <ProtectedRoute>

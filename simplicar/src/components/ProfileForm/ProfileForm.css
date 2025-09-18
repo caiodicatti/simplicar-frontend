@@ -1,0 +1,31 @@
+.profile-section {
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+    .vehicleform-form {
+        max-width: 98vw;
+        padding: 16px;
+    }
+
+    .vehicleform-wrapper {
+        padding: 10px 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .vehicleform-form {
+        max-width: 100vw;
+        min-width: 0;
+        padding: 8px;
+    }
+
+    .vehicleform-wrapper {
+        padding: 4px 0;
+    }
+
+    .profile-section .row>.col-md-6 {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

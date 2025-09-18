@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
-import { FaCar, FaMotorcycle, FaBars, FaCog, FaHome, FaChartBar, FaReceipt, FaClipboardList, FaCalendarAlt } from "react-icons/fa";
+import { FaCar, FaMotorcycle, FaBars, FaCog, FaHome, FaChartBar, FaReceipt, FaClipboardList, FaCalendarAlt, FaUser, FaUsers, FaPalette, FaKey } from "react-icons/fa";
 import "./SidebarMenu.css";
 
 export default function SidebarMenu() {
@@ -85,11 +85,17 @@ export default function SidebarMenu() {
                             borderBottom: "1px solid rgba(0, 0, 0, 0.13)"
                         }}
                     >
-                        <MenuItem icon={<FaCog />} className="pro-menu-item" component={<Link to="/carros" />}>
+                        <MenuItem icon={<FaUser />} className="pro-menu-item" component={<Link to="/configuracoes/perfil" />}>
+                            Perfil
+                        </MenuItem>
+                        <MenuItem icon={<FaUsers />} className="pro-menu-item" component={<Link to="/configuracoes/usuarios" />}>
                             Usuários
                         </MenuItem>
-                        <MenuItem icon={<FaMotorcycle />} className="pro-menu-item" component={<Link to="/motos" />}>
-                            Qualquer coisa
+                        <MenuItem icon={<FaPalette />} className="pro-menu-item" component={<Link to="/configuracoes/preferencias" />}>
+                            Preferências
+                        </MenuItem>
+                        <MenuItem icon={<FaKey />} className="pro-menu-item" component={<Link to="/configuracoes/senha" />}>
+                            Alterar Senha
                         </MenuItem>
                     </SubMenu>
                 )}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { slide as Menu } from "react-burger-menu";
-import { FaBars, FaCar, FaMotorcycle, FaHome, FaCog, FaChartBar, FaReceipt, FaClipboardList, FaCalendarAlt } from "react-icons/fa";
+import { FaBars, FaCar, FaMotorcycle, FaHome, FaCog, FaChartBar, FaReceipt, FaClipboardList, FaCalendarAlt, FaUser, FaUsers, FaPalette, FaKey } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import "./MobileDrawerMenu.css";
 
@@ -19,12 +19,14 @@ export default function MobileDrawerMenu() {
     const isCarros = location.pathname === "/carros";
     const isMotos = location.pathname === "/motos";
     const isHome = location.pathname === "/home";
-    const isUsuarios = location.pathname === "/carros";
-    const isQualquer = location.pathname === "/motos";
     const isFinanceiro = location.pathname === "/relatorio-financeiro";
     const isDespVeiculo = location.pathname === "/relatorio-despesa-veiculo";
     const isDespPeriodo = location.pathname === "/relatorio-despesa-periodo";
     const isInventario = location.pathname === "/relatorio-inventario";
+    const isPerfil = location.pathname === "/configuracoes/perfil";
+    const isUsuarios = location.pathname === "/configuracoes/usuarios";
+    const isPreferencias = location.pathname === "/configuracoes/preferencias";
+    const isSenha = location.pathname === "/configuracoes/senha";
 
     return (
         <>
@@ -133,18 +135,32 @@ export default function MobileDrawerMenu() {
                     {openConfig && (
                         <div className="bm-submenu-items">
                             <Link
-                                to="/carros"
+                                to="/configuracoes/perfil"
+                                onClick={closeMenu}
+                                className={`bm-submenu-items-link ${isPerfil ? "active" : ""}`}
+                            >
+                                <FaUser style={{ marginRight: 6 }} /> Perfil
+                            </Link>
+                            <Link
+                                to="/configuracoes/usuarios"
                                 onClick={closeMenu}
                                 className={`bm-submenu-items-link ${isUsuarios ? "active" : ""}`}
                             >
-                                <FaCog style={{ marginRight: 6 }} /> Usuários
+                                <FaUsers style={{ marginRight: 6 }} /> Usuários
                             </Link>
                             <Link
-                                to="/motos"
+                                to="/configuracoes/preferencias"
                                 onClick={closeMenu}
-                                className={`bm-submenu-items-link ${isQualquer ? "active" : ""}`}
+                                className={`bm-submenu-items-link ${isPreferencias ? "active" : ""}`}
                             >
-                                <FaMotorcycle style={{ marginRight: 6 }} /> Qualquer coisa
+                                <FaPalette style={{ marginRight: 6 }} /> Preferências
+                            </Link>
+                            <Link
+                                to="/configuracoes/senha"
+                                onClick={closeMenu}
+                                className={`bm-submenu-items-link ${isSenha ? "active" : ""}`}
+                            >
+                                <FaKey style={{ marginRight: 6 }} /> Alterar Senha
                             </Link>
                         </div>
                     )}

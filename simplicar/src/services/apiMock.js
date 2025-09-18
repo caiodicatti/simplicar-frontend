@@ -1,3 +1,5 @@
+// =============================================================================================== Veículos
+
 let vehicles = [
     {
         id: 1,
@@ -369,4 +371,29 @@ export function getFinancialSummary(startDate, endDate, type = null) {
     });
 }
 
-export default { getVehicles, addVehicle, deleteVehicle, getVehicleById, getVehicleByPlate, getVehicleByPlateOrModel, getFinancialSummary };
+// ===============================================================================================  Usuários
+const usersMock = [
+    {
+        id: 1,
+        login: "caiodicatti",
+        name: "Caio Dicatti",
+        email: "caio@email.com",
+        birthDate: "1990-01-01",
+        role: "admin",
+        active: true
+    }
+];
+
+export function getCurrentUser() {
+    return new Promise(resolve => setTimeout(() => resolve(usersMock[0]), 500));
+};
+
+export function saveProfile(data) {
+    usersMock[0] = { ...usersMock[0], ...data };
+    return new Promise(resolve => setTimeout(() => resolve(usersMock[0]), 500));
+}
+
+
+// ===============================================================================================  Export
+
+export default { getVehicles, addVehicle, deleteVehicle, getVehicleById, getVehicleByPlate, getVehicleByPlateOrModel, getFinancialSummary, getCurrentUser, saveProfile };

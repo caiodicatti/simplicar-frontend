@@ -9,6 +9,7 @@ import FinancialReport from "./pages/FinancialReport/FinancialReport";
 import InventoryReport from "./pages/InventoryReport/InventoryReport";
 import VehicleExpenseReport from "./pages/VehicleExpenseReport/VehicleExpenseReport";
 import PeriodExpenseReport from "./pages/PeriodExpenseReport/PeriodExpenseReport";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 import SidebarMenu from "./components/SidebarMenu/SidebarMenu";
 
@@ -138,7 +139,57 @@ export default function App() {
         }
       />
 
-    </Routes>
+      {/* <Route
+        path="/configuracoes"
+        element={
+          <ProtectedRoute>
+            <ProtectedLayout>
+              <SettingsPage />
+            </ProtectedLayout>
+          </ProtectedRoute>
+        }
+      /> */}
+      <Route
+        path="/configuracoes/perfil"
+        element={
+          <ProtectedRoute>
+            <ProtectedLayout>
+              <ProfilePage />
+            </ProtectedLayout>
+          </ProtectedRoute>
+        }
+      />
+      {/* <Route
+        path="/configuracoes/usuarios"
+        element={
+          <ProtectedRoute>
+            <ProtectedLayout>
+              <UsersPage />
+            </ProtectedLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/configuracoes/preferencias"
+        element={
+          <ProtectedRoute>
+            <ProtectedLayout>
+              <PreferencesPage />
+            </ProtectedLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/configuracoes/senha"
+        element={
+          <ProtectedRoute>
+            <ProtectedLayout>
+              <ChangePasswordPage />
+            </ProtectedLayout>
+          </ProtectedRoute>
+        }
+      /> */}
 
+    </Routes>
   );
 }

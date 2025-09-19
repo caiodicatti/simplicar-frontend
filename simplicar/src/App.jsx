@@ -17,10 +17,12 @@ import PasswordChangePage from "./pages/PasswordChangePage/PasswordChangePage";
 import StoresPage from "./pages/StoresPage/StoresPage";
 import NoAccess from "./pages/NoAccess/NoAccess";
 import { canSeeStores, canAdminUsers, canManageUsers } from "./utils/permissions";
-
-const user = JSON.parse(localStorage.getItem("userSession") || "{}");
+import { useAuth } from './context/AuthContext';
 
 export default function App() {
+
+  const { user } = useAuth();
+
   return (
     <Routes>
       <Route path="/" element={<LoginPage />} />

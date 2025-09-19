@@ -5,6 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { canSeeStores, canAdminUsers, canManageUsers } from "../../utils/permissions";
 import LogoutModal from "../LogoutModal/LogoutModal";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import "./MobileDrawerMenu.css";
 
 export default function MobileDrawerMenu() {
@@ -13,6 +14,7 @@ export default function MobileDrawerMenu() {
     const [openConfig, setOpenConfig] = useState(false);
     const [openRelatorios, setOpenRelatorios] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const { user, logout } = useAuth();
     const navigate = useNavigate();
 
     const location = useLocation();
@@ -20,8 +22,6 @@ export default function MobileDrawerMenu() {
     const handleHamburgerClick = () => setIsOpen(isOpen ? false : true);
 
     const closeMenu = () => setIsOpen(false);
-
-    const session = JSON.parse(localStorage.getItem("userSession") || "{}");
 
     const isCarros = location.pathname === "/carros";
     const isMotos = location.pathname === "/motos";
@@ -37,10 +37,9 @@ export default function MobileDrawerMenu() {
     const isLojas = location.pathname === "/configuracoes/lojas";
 
     const handleLogout = () => {
-        localStorage.removeItem("userSession");
+        logout();
         setShowLogoutModal(false);
         setIsOpen(false);
-        window.location.reload();
     };
 
 
@@ -98,7 +97,7 @@ export default function MobileDrawerMenu() {
                     )}
                 </div>
 
-                {canManageUsers(session) &&
+                {canManageUsers(user) &&
                     <div className={`bm-submenu ${openRelatorios ? "open" : ""}`}>
                         <button
                             className={`bm-submenu-toggle${openRelatorios ? " expanded" : ""}`}
@@ -159,7 +158,7 @@ export default function MobileDrawerMenu() {
                             >
                                 <FaUser style={{ marginRight: 6 }} /> Perfil
                             </Link>
-                            {canAdminUsers(session) &&
+                            {canAdminUsers(user) &&
                                 <Link
                                     to="/configuracoes/usuarios"
                                     onClick={closeMenu}
@@ -168,7 +167,7 @@ export default function MobileDrawerMenu() {
                                     <FaUsers style={{ marginRight: 6 }} /> Usuários
                                 </Link>
                             }
-                            {canSeeStores(session) &&
+                            {canSeeStores(user) &&
                                 <Link
                                     to="/configuracoes/lojas"
                                     onClick={closeMenu}

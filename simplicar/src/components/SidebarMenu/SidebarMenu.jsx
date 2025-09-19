@@ -5,17 +5,17 @@ import { FaCar, FaMotorcycle, FaBars, FaCog, FaHome, FaChartBar, FaReceipt, FaCl
 import { canSeeStores, canAdminUsers, canManageUsers } from "../../utils/permissions";
 import LogoutModal from "../LogoutModal/LogoutModal";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import "./SidebarMenu.css";
 
 export default function SidebarMenu() {
     const [collapsed, setCollapsed] = useState(true);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const navigate = useNavigate();
-
-    const session = JSON.parse(localStorage.getItem("userSession") || "{}");
+    const { user, logout } = useAuth();
 
     const handleLogout = () => {
-        localStorage.removeItem("userSession");
+        logout();
         setShowLogoutModal(false);
         window.location.reload();
     };
@@ -68,7 +68,7 @@ export default function SidebarMenu() {
                         </SubMenu>
                     )}
 
-                    {!collapsed && canManageUsers(session) && (
+                    {!collapsed && canManageUsers(user) && (
                         <SubMenu
                             label="Relatórios"
                             style={{
@@ -102,12 +102,12 @@ export default function SidebarMenu() {
                             <MenuItem icon={<FaUser />} className="pro-menu-item" component={<Link to="/configuracoes/perfil" />}>
                                 Perfil
                             </MenuItem>
-                            {canAdminUsers(session) &&
+                            {canAdminUsers(user) &&
                                 <MenuItem icon={<FaUsers />} className="pro-menu-item" component={<Link to="/configuracoes/usuarios" />}>
                                     Usuários
                                 </MenuItem>
                             }
-                            {canSeeStores(session) &&
+                            {canSeeStores(user) &&
                                 <MenuItem icon={<FaClipboardList />} className="pro-menu-item" component={<Link to="/configuracoes/lojas" />}>
                                     Lojas
                                 </MenuItem>

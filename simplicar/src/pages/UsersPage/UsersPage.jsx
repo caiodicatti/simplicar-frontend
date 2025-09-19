@@ -6,9 +6,8 @@ import PermissionDescriptionBox from "../../components/PermissionDescriptionBox/
 import SearchInput from "../../components/SearchInput/SearchInput";
 import Pagination from '../../components/Pagination/Pagination';
 import { Row, Col } from "react-bootstrap";
+import { useAuth } from '../../context/AuthContext';
 import "./UsersPage.css";
-
-const loggedUser = JSON.parse(localStorage.getItem("userSession") || "{}");
 
 const PAGE_SIZE = 2;
 
@@ -22,6 +21,7 @@ export default function UsersPage() {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
+    const { user } = useAuth();
 
     // Busca roles
     useEffect(() => {
@@ -152,7 +152,7 @@ export default function UsersPage() {
                 user={currentUser}
                 roles={roles}
                 stores={stores}
-                currentUser={loggedUser}
+                currentUser={user}
                 onSave={handleSaveUser}
                 onCancel={handleCancelModal}
                 onToggleActive={handleToggleActive}

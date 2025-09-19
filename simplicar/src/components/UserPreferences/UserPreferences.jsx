@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
+import { useAuth } from '../../context/AuthContext';
 import "./UserPreferences.css";
 
 const DEFAULT_PREFERENCES = {
@@ -10,15 +11,15 @@ const DEFAULT_PREFERENCES = {
 export default function UserPreferences({ onSave }) {
     const [prefs, setPrefs] = useState(DEFAULT_PREFERENCES);
     const [saved, setSaved] = useState(false);
+    const { user, logout, setUser, updatePrefs } = useAuth();
 
     // Carregar preferências do localStorage
     useEffect(() => {
-        const session = JSON.parse(localStorage.getItem("userSession") || "{}");
-        if (session.prefs) {
-            setPrefs(session.prefs);
+        if (user.prefs) {
+            setPrefs(user.prefs);
         }
         // Aplica o tema ao carregar
-        const theme = session.prefs?.theme || DEFAULT_PREFERENCES.theme;
+        const theme = user.prefs?.theme || DEFAULT_PREFERENCES.theme;
         document.body.setAttribute("data-theme", theme);
     }, []);
 
@@ -37,9 +38,7 @@ export default function UserPreferences({ onSave }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        const session = JSON.parse(localStorage.getItem("userSession") || "{}");
-        session.prefs = prefs;
-        localStorage.setItem("userSession", JSON.stringify(session));
+        updatePrefs(prefs); // Agora funciona!
         document.body.setAttribute("data-theme", prefs.theme);
         setSaved(true);
         if (onSave) onSave(prefs);

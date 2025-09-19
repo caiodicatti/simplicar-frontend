@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import LoginForm from '../../components/LoginForm/LoginForm';
-import { login } from '../../services/authService';
+import { login as loginApi } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext'; // 👈 importe o contexto
 import './LoginPage.css';
 
 export default function LoginPage() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const { login: loginContext } = useAuth();
 
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -22,9 +24,9 @@ export default function LoginPage() {
         await sleep(1500);
 
         try {
-            const userData = await login(user, password);
+            const userData = await loginApi(user, password);
             if (userData) {
-                localStorage.setItem("userSession", JSON.stringify(userData));
+                loginContext(userData);
                 setError('');
                 navigate('/home');
             } else {

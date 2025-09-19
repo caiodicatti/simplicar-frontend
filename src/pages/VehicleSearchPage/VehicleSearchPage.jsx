@@ -92,7 +92,7 @@ function VehicleSearchPage({ vehicleType = "Carro" }) {
                             onClick={() => navigaeteToAddVehicle(vehicleType.toLowerCase())}
                             style={{ whiteSpace: "nowrap" }}
                         >
-                            {`Cadastrar novo ${vehicleType}`}
+                            {vehicleType.toLowerCase() == `carro` ? `Cadastrar novo ${vehicleType}` : `Cadastrar nova ${vehicleType}`}
                         </button>
                     </Col>
                 </Row>

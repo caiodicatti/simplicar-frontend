@@ -10,15 +10,6 @@ export default function VehiclePage({ vehicleType = "", mode = "edit" }) {
     const { id } = useParams();
     const [vehicleData, setVehicleData] = useState(null);
 
-    // useEffect(() => {
-    //     if (mode === "edit" && id) {
-    //         // Aqui você chama sua API para buscar os dados pelo id
-    //         fetch(`/api/vehicle/${id}`)
-    //             .then(res => res.json())
-    //             .then(data => setVehicleData(data));
-    //     }
-    // }, [id, mode]);
-
     useEffect(() => {
         if (mode === "edit" && id) {
             var type = vehicleType.toLowerCase() === 'carro' ? 'car' : 'moto';
@@ -27,7 +18,6 @@ export default function VehiclePage({ vehicleType = "", mode = "edit" }) {
         }
     }, [id, mode]);
 
-    // Só renderiza o form quando os dados estiverem carregados
     if (mode === "edit" && !vehicleData) {
         return <div className="vehicle-loading">Carregando...</div>;
     }

@@ -4,6 +4,7 @@ import TradeInSearchSelector from "../TradeInSearchSelector/TradeInSearchSelecto
 import { formatCurrency, formatDate, formatNumber, normalizeCurrencyInput, parseCurrencyString } from "../../utils/formatters";
 import FormattedInput from "../FormattedInput/FormattedInput";
 import apiMock from "../../services/apiMock";
+import { useNavigate } from "react-router-dom";
 import "./VehicleForm.css";
 
 const initialState = {
@@ -28,6 +29,7 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
     const [form, setForm] = useState(vehicleData || initialState);
     const [loadingPlate, setLoadingPlate] = useState(false);
     const [expenseRows, setExpenseRows] = useState([{ description: "", value: "" }]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (isEdit && vehicleData) {
@@ -312,7 +314,7 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
                         ))}
                     </tbody>
                 </Table>
-                <Button variant="secondary" onClick={addExpenseRow}>
+                <Button variant="secondary" className="btn-add-cost" onClick={addExpenseRow}>
                     Adicionar gasto
                 </Button>
                 <div className="mt-2"><strong>Valor total de gastos: </strong>{formatCurrency(totalExpenses.toString())}</div>
@@ -333,7 +335,11 @@ export default function VehicleForm({ vehicleType = "", vehicleData = null, isEd
                 {/* Ações */}
                 <div className="d-flex gap-2 justify-content-end mt-4">
                     <Button variant="success">Salvar</Button>
-                    <Button variant="outline-secondary">Cancelar</Button>
+                    <Button
+                        variant="outline-secondary"
+                        onClick={() => navigate(vehicleType.toLowerCase() === "carro" ? "/carros" : "/motos")}>
+                        Cancelar
+                    </Button>
                 </div>
             </Form>
         </div>

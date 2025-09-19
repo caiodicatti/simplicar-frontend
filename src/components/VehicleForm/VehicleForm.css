@@ -30,6 +30,10 @@
     vertical-align: middle !important;
 }
 
+.btn-add-cost {
+    width: 20%;
+}
+
 @media (max-width: 900px) {
     .vehicleform-form {
         max-width: 98vw;
@@ -56,5 +60,9 @@
     .table td {
         font-size: 0.97rem;
         padding: 0.35rem;
+    }
+
+    .btn-add-cost {
+        width: 100%;
     }
 }

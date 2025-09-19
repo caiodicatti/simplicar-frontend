@@ -4,6 +4,7 @@ import VehicleGrid from '../../components/VehicleGrid/VehicleGrid';
 import Pagination from '../../components/Pagination/Pagination';
 import apiMock from '../../services/apiMock';
 import { useNavigate } from 'react-router-dom';
+import { Row, Col } from "react-bootstrap";
 import './VehicleSearchPage.css';
 
 const PAGE_SIZE = 5;
@@ -70,23 +71,31 @@ function VehicleSearchPage({ vehicleType = "Carro" }) {
         navigate(`/cad-${vehicle}`);
     }
 
+
     return (
         <div className="vehicle-search-center">
             <div className="vehicle-search-content">
                 <h2 className="mb-4 text-center">{vehicleType}s</h2>
-                <div className="d-flex flex-wrap gap-2 mb-3">
-                    <div className="flex-grow-1">
+                <Row className="mb-3 gx-2 gy-2">
+                    <Col xs={12} md={9}>
                         <SearchInput
                             value={searchTerm}
                             onChange={setSearchTerm}
                             onSearch={handleSearch}
                             placeholder={`Digite a placa ou modelo do ${vehicleType.toLowerCase()}`}
                         />
-                    </div>
-                    <button className="btn btn-success" type="button" onClick={() => navigaeteToAddVehicle(vehicleType.toLowerCase())}>
-                        {`Cadastrar novo ${vehicleType}`}
-                    </button>
-                </div>
+                    </Col>
+                    <Col xs={12} md={3}>
+                        <button
+                            className="btn btn-success w-100 w-md-auto"
+                            type="button"
+                            onClick={() => navigaeteToAddVehicle(vehicleType.toLowerCase())}
+                            style={{ whiteSpace: "nowrap" }}
+                        >
+                            {`Cadastrar novo ${vehicleType}`}
+                        </button>
+                    </Col>
+                </Row>
                 <VehicleGrid
                     vehicles={paginatedVehicles}
                     onEdit={handleEdit}

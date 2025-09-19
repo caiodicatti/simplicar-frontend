@@ -6,8 +6,10 @@ export default function ProfilePage() {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const session = JSON.parse(localStorage.getItem("userSession") || "{}");
+
     useEffect(() => {
-        apiMock.getCurrentUser().then(data => {
+        apiMock.getCurrentUser(session.id).then(data => {
             setUser(data);
             setLoading(false);
         });

@@ -402,11 +402,33 @@ let usersMock = [
         role: "manager",
         active: true,
         storeId: 3
+    },
+    {
+        id: 4,
+        login: "marcosgerente",
+        name: "Gerente Marcos",
+        email: "marcos@email.com",
+        birthDate: "1992-11-09",
+        role: "manager",
+        active: true,
+        storeId: 3
+    },
+    {
+        id: 5,
+        login: "opclaudio",
+        name: "Operador Claudio",
+        email: "claudio@email.com",
+        birthDate: "1985-11-09",
+        role: "operator",
+        active: true,
+        storeId: 2
     }
+
 ];
 
-export function getCurrentUser() {
-    return new Promise(resolve => setTimeout(() => resolve(usersMock[0]), 500));
+export function getCurrentUser(idUser) {
+    const user = usersMock.find(x => x.id === Number(idUser)) || null;
+    return new Promise(resolve => setTimeout(() => resolve(user), 500));
 };
 
 export function saveProfile(data) {

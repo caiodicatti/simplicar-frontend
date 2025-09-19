@@ -24,7 +24,7 @@ export function login(user, password) {
     if (user === MOCK_USER_TESTE && password === MOCK_PASS_TESTE) {
         const futureTimestamp = Math.floor(Date.now() / 1000) + 60 * 60;
         return {
-            id: "1435",
+            id: "2",
             name: "Usuário Teste",
             role: "admin",
             exp: futureTimestamp
@@ -34,7 +34,7 @@ export function login(user, password) {
     if (user === MOCK_USER_GERENTE && password === MOCK_PASS_GERENTE) {
         const futureTimestamp = Math.floor(Date.now() / 1000) + 60 * 60;
         return {
-            id: "1587",
+            id: "3",
             name: "Gerente Marcos",
             role: "manager",
             exp: futureTimestamp
@@ -44,7 +44,7 @@ export function login(user, password) {
     if (user === MOCK_USER_GERENTE && password === MOCK_PASS_GERENTE) {
         const futureTimestamp = Math.floor(Date.now() / 1000) + 60 * 60;
         return {
-            id: "1587",
+            id: "4",
             name: "Gerente Marcos",
             role: "manager",
             exp: futureTimestamp
@@ -54,7 +54,7 @@ export function login(user, password) {
     if (user === MOCK_USER_OP && password === MOCK_PASS_OP) {
         const futureTimestamp = Math.floor(Date.now() / 1000) + 60 * 60;
         return {
-            id: "1587",
+            id: "5",
             name: "Operador Claudio",
             role: "operator",
             exp: futureTimestamp

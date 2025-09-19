@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import { login as loginApi } from '../../services/authService';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // 👈 importe o contexto
+import { useAuth } from '../../context/AuthContext';
 import './LoginPage.css';
 
 export default function LoginPage() {
@@ -27,6 +27,8 @@ export default function LoginPage() {
             const userData = await loginApi(user, password);
             if (userData) {
                 loginContext(userData);
+                const theme = userData.prefs?.theme || "light";
+                document.body.setAttribute("data-theme", theme);
                 setError('');
                 navigate('/home');
             } else {

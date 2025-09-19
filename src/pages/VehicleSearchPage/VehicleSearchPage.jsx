@@ -5,15 +5,17 @@ import Pagination from '../../components/Pagination/Pagination';
 import apiMock from '../../services/apiMock';
 import { useNavigate } from 'react-router-dom';
 import { Row, Col } from "react-bootstrap";
+import { useAuth } from '../../context/AuthContext';
 import './VehicleSearchPage.css';
-
-const PAGE_SIZE = 5;
 
 function VehicleSearchPage({ vehicleType = "Carro" }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [vehicles, setVehicles] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const { user } = useAuth();
     const navigate = useNavigate();
+
+    const PAGE_SIZE = user.prefs?.pageSize ?? 5;
 
     useEffect(() => {
         async function fetchVehicles() {

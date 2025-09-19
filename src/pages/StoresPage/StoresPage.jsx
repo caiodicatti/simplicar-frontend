@@ -5,9 +5,8 @@ import StoreModal from "../../components/StoreModal/StoreModal";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import Pagination from "../../components/Pagination/Pagination";
 import { Row, Col } from "react-bootstrap";
+import { useAuth } from '../../context/AuthContext';
 import "./StoresPage.css";
-
-const PAGE_SIZE = 5;
 
 export default function StoresPage() {
     const [stores, setStores] = useState([]);
@@ -17,6 +16,9 @@ export default function StoresPage() {
     const [currentStore, setCurrentStore] = useState(null);
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
+    const { user } = useAuth();
+
+    const PAGE_SIZE = user.prefs?.pageSize ?? 5;
 
     useEffect(() => {
         setLoading(true);

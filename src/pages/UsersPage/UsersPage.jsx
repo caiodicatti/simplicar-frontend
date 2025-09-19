@@ -9,8 +9,6 @@ import { Row, Col } from "react-bootstrap";
 import { useAuth } from '../../context/AuthContext';
 import "./UsersPage.css";
 
-const PAGE_SIZE = 2;
-
 export default function UsersPage() {
     const [users, setUsers] = useState([]);
     const [roles, setRoles] = useState([]);
@@ -22,6 +20,8 @@ export default function UsersPage() {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const { user } = useAuth();
+
+    const PAGE_SIZE = user.prefs?.pageSize ?? 5;
 
     // Busca roles
     useEffect(() => {

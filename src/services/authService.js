@@ -17,7 +17,11 @@ export function login(user, password) {
             id: "1",
             name: "Administrador",
             role: "superadmin",
-            exp: futureTimestamp
+            exp: futureTimestamp,
+            prefs: {
+                theme: "light",
+                pageSize: 6
+            }
         };
     }
 
@@ -27,7 +31,11 @@ export function login(user, password) {
             id: "2",
             name: "Usuário Teste",
             role: "admin",
-            exp: futureTimestamp
+            exp: futureTimestamp,
+            prefs: {
+                theme: "light",
+                pageSize: 2
+            }
         };
     }
 
@@ -37,7 +45,11 @@ export function login(user, password) {
             id: "3",
             name: "Gerente Marcos",
             role: "manager",
-            exp: futureTimestamp
+            exp: futureTimestamp,
+            prefs: {
+                theme: "light",
+                pageSize: 4
+            }
         };
     }
 
@@ -47,7 +59,11 @@ export function login(user, password) {
             id: "4",
             name: "Gerente Marcos",
             role: "manager",
-            exp: futureTimestamp
+            exp: futureTimestamp,
+            prefs: {
+                theme: "light",
+                pageSize: 3
+            }
         };
     }
 
@@ -57,7 +73,11 @@ export function login(user, password) {
             id: "5",
             name: "Operador Claudio",
             role: "operator",
-            exp: futureTimestamp
+            exp: futureTimestamp,
+            prefs: {
+                theme: "dark",
+                pageSize: 3
+            }
         };
     }
 

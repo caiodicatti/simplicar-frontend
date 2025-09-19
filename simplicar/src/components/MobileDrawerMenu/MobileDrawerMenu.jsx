@@ -27,6 +27,7 @@ export default function MobileDrawerMenu() {
     const isUsuarios = location.pathname === "/configuracoes/usuarios";
     const isPreferencias = location.pathname === "/configuracoes/preferencias";
     const isSenha = location.pathname === "/configuracoes/senha";
+    const isLojas = location.pathname === "/configuracoes/lojas";
 
     return (
         <>
@@ -147,6 +148,13 @@ export default function MobileDrawerMenu() {
                                 className={`bm-submenu-items-link ${isUsuarios ? "active" : ""}`}
                             >
                                 <FaUsers style={{ marginRight: 6 }} /> Usuários
+                            </Link>
+                            <Link
+                                to="/configuracoes/lojas"
+                                onClick={closeMenu}
+                                className={`bm-submenu-items-link${isLojas ? " active" : ""}`}
+                            >
+                                <FaClipboardList style={{ marginRight: 6 }} /> Lojas
                             </Link>
                             <Link
                                 to="/configuracoes/preferencias"

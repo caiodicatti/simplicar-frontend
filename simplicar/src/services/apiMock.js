@@ -480,7 +480,106 @@ export async function getRoles() {
     return rolesMock;
 };
 
+// ===============================================================================================  Lojas
+let storesMock = [
+    {
+        id: 1,
+        nomeFantasia: "Estacionamento Central",
+        cnpj: "12345678000199",
+        proprietario: "João Silva",
+        situacao: "Ativo",
+        ativoAte: "2025-12-31",
+        enderecos: ["Rua A, 123"],
+        telefone: "(11) 99999-9999",
+        email: "central@email.com",
+        plano: "Mensal",
+        observacoes: "",
+        criadoEm: "2025-01-01",
+        atualizadoEm: "2025-08-01"
+    },
+    {
+        id: 2,
+        nomeFantasia: "Parque Shopping",
+        cnpj: "98765432000188",
+        proprietario: "Maria Souza",
+        situacao: "Bloqueado",
+        ativoAte: "2024-11-15",
+        enderecos: ["Av. das Flores, 777"],
+        telefone: "(11) 98888-1111",
+        email: "shopping@email.com",
+        plano: "Anual",
+        observacoes: "Em negociação",
+        criadoEm: "2024-03-10",
+        atualizadoEm: "2025-06-21"
+    },
+    {
+        id: 3,
+        nomeFantasia: "Mercado Popular",
+        cnpj: "11222333000155",
+        proprietario: "Carlos Mendes",
+        situacao: "Inadimplente",
+        ativoAte: "2025-02-28",
+        enderecos: ["Rua do Mercado, 50"],
+        telefone: "(11) 97777-2222",
+        email: "mercado@email.com",
+        plano: "Mensal",
+        observacoes: "Fatura em aberto",
+        criadoEm: "2025-02-01",
+        atualizadoEm: "2025-09-01"
+    },
+    {
+        id: 4,
+        nomeFantasia: "Padaria Pão Doce",
+        cnpj: "33444555000166",
+        proprietario: "Ana Paula",
+        situacao: "Em teste",
+        ativoAte: "2025-10-10",
+        enderecos: ["Rua do Pão, 123"],
+        telefone: "(11) 96666-3333",
+        email: "padaria@email.com",
+        plano: "Mensal",
+        observacoes: "Teste gratuito",
+        criadoEm: "2025-09-01",
+        atualizadoEm: "2025-09-10"
+    },
+];
+
+export function getStores(query = "") {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            if (!query) return resolve(storesMock);
+            resolve(
+                storesMock.filter(store =>
+                    store.nomeFantasia.toLowerCase().includes(query.toLowerCase())
+                )
+            );
+        }, 300);
+    });
+}
+
+export async function createStore(data) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const id = storesMock.length + 1;
+    storesMock.push({ ...data, id });
+    return id;
+}
+
+export async function updateStore(id, data) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    storesMock = storesMock.map(s => s.id === id ? { ...s, ...data } : s);
+    return true;
+}
+
+export async function getStoreById(id) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    return storesMock.find(s => s.id === id) || null;
+}
+
 
 // ===============================================================================================  Export
 
-export default { getVehicles, addVehicle, deleteVehicle, getVehicleById, getVehicleByPlate, getVehicleByPlateOrModel, getFinancialSummary, getCurrentUser, saveProfile, getUsers, createUser, updateUser, toggleUserActive, getRoles };
+export default {
+    getVehicles, addVehicle, deleteVehicle, getVehicleById, getVehicleByPlate, getVehicleByPlateOrModel,
+    getFinancialSummary, getCurrentUser, saveProfile, getUsers, createUser, updateUser, toggleUserActive, getRoles,
+    getStores, createStore, updateStore, getStoreById
+};

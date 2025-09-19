@@ -13,6 +13,7 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import UsersPage from "./pages/UsersPage/UsersPage";
 import PreferencesPage from "./pages/UserPreferencesPage/UserPreferencesPage";
 import PasswordChangePage from "./pages/PasswordChangePage/PasswordChangePage";
+import StoresPage from "./pages/StoresPage/StoresPage";
 
 export default function App() {
   return (
@@ -139,17 +140,6 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-
-      {/* <Route
-        path="/configuracoes"
-        element={
-          <ProtectedRoute>
-            <ProtectedLayout>
-              <SettingsPage />
-            </ProtectedLayout>
-          </ProtectedRoute>
-        }
-      /> */}
       <Route
         path="/configuracoes/perfil"
         element={
@@ -166,6 +156,16 @@ export default function App() {
           <ProtectedRoute>
             <ProtectedLayout>
               <UsersPage />
+            </ProtectedLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/configuracoes/lojas"
+        element={
+          <ProtectedRoute>
+            <ProtectedLayout>
+              <StoresPage />
             </ProtectedLayout>
           </ProtectedRoute>
         }

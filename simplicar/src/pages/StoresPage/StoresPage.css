@@ -1,0 +1,44 @@
+.stores-page-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100vw;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 32px 0;
+}
+
+.stores-page-form {
+    background: var(--content-pages-bg-default);
+    border-radius: 18px;
+    box-shadow: var(--content-pages-boxshadow-default);
+    width: 100%;
+    max-width: 880px;
+    min-width: 300px;
+    margin-top: 40px;
+}
+
+.stores-search-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+    .stores-search-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .stores-search-row>* {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+    }
+
+    .stores-search-row>*:last-child {
+        margin-bottom: 0 !important;
+    }
+}

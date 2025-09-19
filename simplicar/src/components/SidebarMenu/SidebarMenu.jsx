@@ -91,6 +91,9 @@ export default function SidebarMenu() {
                         <MenuItem icon={<FaUsers />} className="pro-menu-item" component={<Link to="/configuracoes/usuarios" />}>
                             Usuários
                         </MenuItem>
+                        <MenuItem icon={<FaClipboardList />} className="pro-menu-item" component={<Link to="/configuracoes/lojas" />}>
+                            Lojas
+                        </MenuItem>
                         <MenuItem icon={<FaPalette />} className="pro-menu-item" component={<Link to="/configuracoes/preferencias" />}>
                             Preferências
                         </MenuItem>

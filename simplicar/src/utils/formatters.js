@@ -58,4 +58,17 @@ export function parseCurrencyString(str) {
     return parseFloat(cleaned) || 0;
 }
 
-export default { formatDate, formatCurrency, formatNumber, normalizeCurrencyInput, parseCurrencyString };
+// Mascara para CNPJ: 00.000.000/0000-00
+export function formatCNPJ(value = "") {
+    let cnpj = value.replace(/[^\d]/g, "");
+    if (!cnpj) return "";
+    cnpj = cnpj.slice(0, 14); // no máximo 14 dígitos
+
+    return cnpj
+        .replace(/^(\d{2})(\d)/, "$1.$2")
+        .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+        .replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3/$4")
+        .replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, "$1.$2.$3/$4-$5");
+}
+
+export default { formatDate, formatCurrency, formatNumber, normalizeCurrencyInput, parseCurrencyString, formatCNPJ };

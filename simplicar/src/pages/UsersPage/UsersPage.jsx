@@ -5,6 +5,7 @@ import UserModal from "../../components/UserModal/UserModal";
 import PermissionDescriptionBox from "../../components/PermissionDescriptionBox/PermissionDescriptionBox";
 import SearchInput from "../../components/SearchInput/SearchInput";
 import Pagination from '../../components/Pagination/Pagination';
+import { Row, Col } from "react-bootstrap";
 import "./UsersPage.css";
 
 const PAGE_SIZE = 2;
@@ -110,21 +111,25 @@ export default function UsersPage() {
         <div className="users-page-wrapper">
             <div className="users-page-form p-4">
                 <h3 className="text-center mb-4">Usuários do sistema</h3>
-                <div className="d-flex align-items-center gap-2 mb-3">
-                    <SearchInput
-                        value={searchTerm}
-                        onChange={handleSearch}
-                        onSearch={() => handleSearch(searchTerm)}
-                        placeholder="Buscar por nome ou login..."
-                    />
-                    <button
-                        className="btn btn-success"
-                        onClick={handleCreateUser}
-                        style={{ whiteSpace: "nowrap" }}
-                    >
-                        Cadastrar usuário
-                    </button>
-                </div>
+                <Row className="mb-3 gx-2 gy-2">
+                    <Col xs={12} md={9}>
+                        <SearchInput
+                            value={searchTerm}
+                            onChange={handleSearch}
+                            onSearch={() => handleSearch(searchTerm)}
+                            placeholder="Buscar por nome ou login..."
+                        />
+                    </Col>
+                    <Col xs={12} md={3}>
+                        <button
+                            className="btn btn-success w-100 w-md-auto"
+                            onClick={handleCreateUser}
+                            style={{ whiteSpace: "nowrap" }}
+                        >
+                            Cadastrar usuário
+                        </button>
+                    </Col>
+                </Row>
                 <PermissionDescriptionBox roles={roles} />
                 {loading ? (
                     <div className="text-center py-4">Carregando...</div>

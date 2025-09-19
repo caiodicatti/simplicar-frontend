@@ -1,0 +1,33 @@
+.storelist-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 0;
+}
+
+.storelist-table {
+    min-width: 420px;
+    background: transparent;
+    margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+    .storelist-table-wrapper {
+        overflow-x: unset;
+        padding-bottom: 0;
+    }
+
+    .storelist-table {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .storelist-hide-mobile {
+        display: none !important;
+    }
+}
+
+.badge {
+    font-size: 0.78em;
+    padding: 6px 12px;
+    min-width: 102px;
+}

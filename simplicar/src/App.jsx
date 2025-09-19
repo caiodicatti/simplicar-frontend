@@ -3,6 +3,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import HomePage from "./pages/HomePage/HomePage";
 import ProtectedRoute from "./ProtectedRoute";
 import ProtectedLayout from "./layouts/ProtectedLayout/ProtectedLayout";
+import RequirePermission from "./components/auth/ProtectedRoute";
 import VehicleSearchPage from "./pages/VehicleSearchPage/VehicleSearchPage";
 import VehiclePage from "./pages/VehiclePage/VehiclePage";
 import FinancialReport from "./pages/FinancialReport/FinancialReport";
@@ -14,11 +15,26 @@ import UsersPage from "./pages/UsersPage/UsersPage";
 import PreferencesPage from "./pages/UserPreferencesPage/UserPreferencesPage";
 import PasswordChangePage from "./pages/PasswordChangePage/PasswordChangePage";
 import StoresPage from "./pages/StoresPage/StoresPage";
+import NoAccess from "./pages/NoAccess/NoAccess";
+import { canSeeStores, canAdminUsers, canManageUsers } from "./utils/permissions";
+
+const user = JSON.parse(localStorage.getItem("userSession") || "{}");
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<LoginPage />} />
+
+      <Route
+        path="/no-access"
+        element={
+          <ProtectedRoute>
+            <ProtectedLayout>
+              <NoAccess />
+            </ProtectedLayout>
+          </ProtectedRoute>
+        }
+      />
 
       <Route
         path="/home"
@@ -101,9 +117,11 @@ export default function App() {
         path="/relatorio-financeiro"
         element={
           <ProtectedRoute>
-            <ProtectedLayout>
-              <FinancialReport />
-            </ProtectedLayout>
+            <RequirePermission user={user} permissionFn={canManageUsers}>
+              <ProtectedLayout>
+                <FinancialReport />
+              </ProtectedLayout>
+            </RequirePermission>
           </ProtectedRoute>
         }
       />
@@ -112,9 +130,11 @@ export default function App() {
         path="/relatorio-despesa-veiculo"
         element={
           <ProtectedRoute>
-            <ProtectedLayout>
-              <VehicleExpenseReport />
-            </ProtectedLayout>
+            <RequirePermission user={user} permissionFn={canManageUsers}>
+              <ProtectedLayout>
+                <VehicleExpenseReport />
+              </ProtectedLayout>
+            </RequirePermission>
           </ProtectedRoute>
         }
       />
@@ -123,9 +143,11 @@ export default function App() {
         path="/relatorio-despesa-periodo"
         element={
           <ProtectedRoute>
-            <ProtectedLayout>
-              <PeriodExpenseReport />
-            </ProtectedLayout>
+            <RequirePermission user={user} permissionFn={canManageUsers}>
+              <ProtectedLayout>
+                <PeriodExpenseReport />
+              </ProtectedLayout>
+            </RequirePermission>
           </ProtectedRoute>
         }
       />
@@ -134,9 +156,11 @@ export default function App() {
         path="/relatorio-inventario"
         element={
           <ProtectedRoute>
-            <ProtectedLayout>
-              <InventoryReport />
-            </ProtectedLayout>
+            <RequirePermission user={user} permissionFn={canManageUsers}>
+              <ProtectedLayout>
+                <InventoryReport />
+              </ProtectedLayout>
+            </RequirePermission>
           </ProtectedRoute>
         }
       />
@@ -154,9 +178,11 @@ export default function App() {
         path="/configuracoes/usuarios"
         element={
           <ProtectedRoute>
-            <ProtectedLayout>
-              <UsersPage />
-            </ProtectedLayout>
+            <RequirePermission user={user} permissionFn={canAdminUsers}>
+              <ProtectedLayout>
+                <UsersPage />
+              </ProtectedLayout>
+            </RequirePermission>
           </ProtectedRoute>
         }
       />
@@ -164,9 +190,11 @@ export default function App() {
         path="/configuracoes/lojas"
         element={
           <ProtectedRoute>
-            <ProtectedLayout>
-              <StoresPage />
-            </ProtectedLayout>
+            <RequirePermission user={user} permissionFn={canSeeStores}>
+              <ProtectedLayout>
+                <StoresPage />
+              </ProtectedLayout>
+            </RequirePermission>
           </ProtectedRoute>
         }
       />

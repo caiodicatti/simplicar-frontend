@@ -34,7 +34,8 @@
     color: rgb(0, 0, 0);
 }
 
-.menu-home {
+.menu-home,
+.menu-logout {
     border-top: rgba(0, 0, 0, 0.13) 1px solid;
     background-color: #bcc1c7 !important;
 }

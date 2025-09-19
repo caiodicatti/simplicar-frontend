@@ -8,17 +8,23 @@ export default function UserModal({
     mode = "create",
     user = {},
     roles = [],
+    stores = [],
+    currentUser = {},
     onSave,
     onCancel,
     onToggleActive
 }) {
+    const isSuperAdmin = currentUser?.role === "superadmin";
+    const userStoreId = currentUser?.storeId || "";
+
     const [form, setForm] = useState({
         login: "",
         name: "",
         email: "",
         birthDate: "",
         role: roles[0]?.key || "",
-        active: true
+        active: true,
+        storeId: isSuperAdmin ? "" : userStoreId
     });
 
     useEffect(() => {
@@ -29,7 +35,8 @@ export default function UserModal({
                 email: user.email || "",
                 birthDate: user.birthDate || "",
                 role: user.role || roles[0]?.key || "",
-                active: user.active !== undefined ? user.active : true
+                active: user.active !== undefined ? user.active : true,
+                storeId: user.storeId || "",
             });
         } else {
             setForm({
@@ -38,10 +45,11 @@ export default function UserModal({
                 email: "",
                 birthDate: "",
                 role: roles[0]?.key || "",
-                active: true
+                active: true,
+                storeId: "",
             });
         }
-    }, [user, mode, roles]);
+    }, [user, mode, roles, isSuperAdmin, userStoreId]);
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -137,8 +145,27 @@ export default function UserModal({
                                 </Form.Select>
                             </Form.Group>
                         </Col>
+                        {isSuperAdmin && (
+                            <Col md={6}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Loja vinculada</Form.Label>
+                                    <Form.Select
+                                        name="storeId"
+                                        value={form.storeId}
+                                        onChange={handleChange}
+                                        required
+                                        disabled={mode === "edit"}
+                                    >
+                                        <option value="">Selecione uma loja</option>
+                                        {stores.map(store => (
+                                            <option key={store.id} value={store.id}>{store.nomeFantasia}</option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                        )}
                         {mode === "edit" && (
-                            <Col md={6} className="">
+                            <Col md={6} className={!isSuperAdmin ? "" : "mt-4"}>
                                 <Form.Group>
                                     <Form.Label>Status</Form.Label>
                                     <div>

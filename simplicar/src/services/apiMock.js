@@ -380,7 +380,8 @@ let usersMock = [
         email: "caio@email.com",
         birthDate: "1990-01-01",
         role: "admin",
-        active: true
+        active: true,
+        storeId: 2
     },
     {
         id: 2,
@@ -389,7 +390,8 @@ let usersMock = [
         email: "jose@email.com",
         birthDate: "1985-05-21",
         role: "operator",
-        active: true
+        active: true,
+        storeId: 1
     },
     {
         id: 3,
@@ -398,7 +400,8 @@ let usersMock = [
         email: "maria@email.com",
         birthDate: "1992-11-09",
         role: "manager",
-        active: true
+        active: true,
+        storeId: 3
     }
 ];
 
@@ -414,6 +417,15 @@ export function saveProfile(data) {
 // ===============================================================================================  Permissões (roles)
 
 const rolesMock = [
+    {
+        key: "superadmin",
+        label: "Super Administrador",
+        details: [
+            "Acesso absoluto",
+            "Pode visualizar e gerenciar lojas",
+            "Pode tudo que o administrador faz"
+        ]
+    },
     {
         key: "admin",
         label: "Administrador",
@@ -477,7 +489,8 @@ export async function toggleUserActive(id, active) {
 
 export async function getRoles() {
     await new Promise(resolve => setTimeout(resolve, 100));
-    return rolesMock;
+    const roles = rolesMock.filter(x => x.key !== "superadmin");
+    return roles;
 };
 
 // ===============================================================================================  Lojas

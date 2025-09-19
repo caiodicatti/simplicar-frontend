@@ -1,18 +1,66 @@
 const MOCK_USER = "admin";
 const MOCK_PASS = "123";
 
+const MOCK_USER_TESTE = "teste";
+const MOCK_PASS_TESTE = "123";
+
+const MOCK_USER_GERENTE = "ger";
+const MOCK_PASS_GERENTE = "123";
+
+const MOCK_USER_OP = "op";
+const MOCK_PASS_OP = "123";
+
 export function login(user, password) {
     if (user === MOCK_USER && password === MOCK_PASS) {
         const futureTimestamp = Math.floor(Date.now() / 1000) + 60 * 60; // +1h
+        return {
+            id: "1",
+            name: "Administrador",
+            role: "superadmin",
+            exp: futureTimestamp
+        };
+    }
 
-        // Simula JWT decodificado
+    if (user === MOCK_USER_TESTE && password === MOCK_PASS_TESTE) {
+        const futureTimestamp = Math.floor(Date.now() / 1000) + 60 * 60;
         return {
             id: "1435",
-            name: "Axl Rose",
+            name: "Usuário Teste",
             role: "admin",
             exp: futureTimestamp
         };
     }
+
+    if (user === MOCK_USER_GERENTE && password === MOCK_PASS_GERENTE) {
+        const futureTimestamp = Math.floor(Date.now() / 1000) + 60 * 60;
+        return {
+            id: "1587",
+            name: "Gerente Marcos",
+            role: "manager",
+            exp: futureTimestamp
+        };
+    }
+
+    if (user === MOCK_USER_GERENTE && password === MOCK_PASS_GERENTE) {
+        const futureTimestamp = Math.floor(Date.now() / 1000) + 60 * 60;
+        return {
+            id: "1587",
+            name: "Gerente Marcos",
+            role: "manager",
+            exp: futureTimestamp
+        };
+    }
+
+    if (user === MOCK_USER_OP && password === MOCK_PASS_OP) {
+        const futureTimestamp = Math.floor(Date.now() / 1000) + 60 * 60;
+        return {
+            id: "1587",
+            name: "Operador Claudio",
+            role: "operator",
+            exp: futureTimestamp
+        };
+    }
+
     return null;
 }
 

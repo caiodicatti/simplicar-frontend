@@ -121,6 +121,18 @@
     padding-left: 50px !important;
 }
 
+.bm-logout-btn {
+    padding: 4px 12px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 17px;
+    cursor: pointer;
+}
+
 @keyframes submenuFade {
     from {
         opacity: 0;

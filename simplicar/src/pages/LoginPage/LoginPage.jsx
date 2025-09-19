@@ -24,9 +24,7 @@ export default function LoginPage() {
         try {
             const userData = await login(user, password);
             if (userData) {
-                const session = JSON.parse(localStorage.getItem("userSession") || "{}");
-                session.token = userData;
-                localStorage.setItem("userSession", JSON.stringify(session));
+                localStorage.setItem("userSession", JSON.stringify(userData));
                 setError('');
                 navigate('/home');
             } else {

@@ -2,10 +2,9 @@ import { Navigate } from "react-router-dom";
 import { isTokenExpired } from './services/authService';
 
 export default function ProtectedRoute({ children }) {
-    const session = JSON.parse(localStorage.getItem("userSession") || "{}");
-    const token = session.token;
+    const user = JSON.parse(localStorage.getItem("userSession") || "{}");
 
-    if (isTokenExpired(token)) {
+    if (isTokenExpired(user)) {
         return <Navigate to="/" replace />;
     }
 

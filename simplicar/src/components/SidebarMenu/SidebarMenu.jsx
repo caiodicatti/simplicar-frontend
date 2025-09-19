@@ -1,110 +1,147 @@
 import React, { useState } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
-import { FaCar, FaMotorcycle, FaBars, FaCog, FaHome, FaChartBar, FaReceipt, FaClipboardList, FaCalendarAlt, FaUser, FaUsers, FaPalette, FaKey } from "react-icons/fa";
+import { FaCar, FaMotorcycle, FaBars, FaCog, FaHome, FaChartBar, FaReceipt, FaClipboardList, FaCalendarAlt, FaUser, FaUsers, FaPalette, FaKey, FaSignOutAlt } from "react-icons/fa";
+import { canSeeStores, canAdminUsers, canManageUsers } from "../../utils/permissions";
+import LogoutModal from "../LogoutModal/LogoutModal";
+import { useNavigate } from 'react-router-dom';
 import "./SidebarMenu.css";
 
 export default function SidebarMenu() {
     const [collapsed, setCollapsed] = useState(true);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const navigate = useNavigate();
+
+    const session = JSON.parse(localStorage.getItem("userSession") || "{}");
+
+    const handleLogout = () => {
+        localStorage.removeItem("userSession");
+        setShowLogoutModal(false);
+        window.location.reload();
+    };
 
     return (
-        <Sidebar
-            collapsed={collapsed}
-            width="270px"
-            collapsedWidth="60px"
-            className="pro-sidebar"
-        >
-            <Menu iconShape="circle">
-                <MenuItem
-                    icon={<FaBars />}
-                    onClick={() => setCollapsed(!collapsed)}
-                    className="menu-toggle"
-                >
-                    {collapsed ? "" : "Menu"}
-                </MenuItem>
-
-                {!collapsed && (
+        <>
+            <Sidebar
+                collapsed={collapsed}
+                width="270px"
+                collapsedWidth="60px"
+                className="pro-sidebar"
+            >
+                <Menu iconShape="circle">
                     <MenuItem
-                        icon={<FaHome />}
-                        className="menu-home"
-                        component={<Link to="/home" />}
-                        style={{
-                            fontSize: "17px",
-                            borderBottom: "1px solid rgba(0,0,0,0.13)"
-                        }}
+                        icon={<FaBars />}
+                        onClick={() => setCollapsed(!collapsed)}
+                        className="menu-toggle"
                     >
-                        Página Principal
+                        {collapsed ? "" : "Menu"}
                     </MenuItem>
-                )}
 
-                {!collapsed && (
-                    <SubMenu
-                        label="Automóveis"
-                        style={{
-                            fontSize: "17px",
-                            borderBottom: "1px solid rgba(0, 0, 0, 0.13)"
-                        }}
-                    >
-                        <MenuItem icon={<FaCar />} className="pro-menu-item" component={<Link to="/carros" />}>
-                            Carros
+                    {!collapsed && (
+                        <MenuItem
+                            icon={<FaHome />}
+                            className="menu-home"
+                            component={<Link to="/home" />}
+                            style={{
+                                fontSize: "17px",
+                                borderBottom: "1px solid rgba(0,0,0,0.13)"
+                            }}
+                        >
+                            Página Principal
                         </MenuItem>
-                        <MenuItem icon={<FaMotorcycle />} className="pro-menu-item" component={<Link to="/motos" />}>
-                            Motos
-                        </MenuItem>
-                    </SubMenu>
-                )}
+                    )}
 
-                {!collapsed && (
-                    <SubMenu
-                        label="Relatórios"
-                        style={{
-                            fontSize: "17px",
-                            borderBottom: "1px solid rgba(0, 0, 0, 0.13)"
-                        }}
-                    >
-                        <MenuItem icon={<FaChartBar />} className="pro-menu-item" component={<Link to="/relatorio-financeiro" />}>
-                            Resultado Financeiro
-                        </MenuItem>
-                        <MenuItem icon={<FaReceipt />} className="pro-menu-item" component={<Link to="/relatorio-despesa-veiculo" />}>
-                            Despesas por Veículo
-                        </MenuItem>
-                        <MenuItem icon={<FaCalendarAlt />} className="pro-menu-item" component={<Link to="/relatorio-despesa-periodo" />}>
-                            Despesas por Período
-                        </MenuItem>
-                        <MenuItem icon={<FaClipboardList />} className="pro-menu-item" component={<Link to="/relatorio-inventario" />}>
-                            Inventário de Veículos
-                        </MenuItem>
-                    </SubMenu>
-                )}
+                    {!collapsed && (
+                        <SubMenu
+                            label="Automóveis"
+                            style={{
+                                fontSize: "17px",
+                                borderBottom: "1px solid rgba(0, 0, 0, 0.13)"
+                            }}
+                        >
+                            <MenuItem icon={<FaCar />} className="pro-menu-item" component={<Link to="/carros" />}>
+                                Carros
+                            </MenuItem>
+                            <MenuItem icon={<FaMotorcycle />} className="pro-menu-item" component={<Link to="/motos" />}>
+                                Motos
+                            </MenuItem>
+                        </SubMenu>
+                    )}
 
-                {!collapsed && (
-                    <SubMenu
-                        label="Configurações"
-                        style={{
-                            fontSize: "17px",
-                            borderBottom: "1px solid rgba(0, 0, 0, 0.13)"
-                        }}
-                    >
-                        <MenuItem icon={<FaUser />} className="pro-menu-item" component={<Link to="/configuracoes/perfil" />}>
-                            Perfil
-                        </MenuItem>
-                        <MenuItem icon={<FaUsers />} className="pro-menu-item" component={<Link to="/configuracoes/usuarios" />}>
-                            Usuários
-                        </MenuItem>
-                        <MenuItem icon={<FaClipboardList />} className="pro-menu-item" component={<Link to="/configuracoes/lojas" />}>
-                            Lojas
-                        </MenuItem>
-                        <MenuItem icon={<FaPalette />} className="pro-menu-item" component={<Link to="/configuracoes/preferencias" />}>
-                            Preferências
-                        </MenuItem>
-                        <MenuItem icon={<FaKey />} className="pro-menu-item" component={<Link to="/configuracoes/senha" />}>
-                            Alterar Senha
-                        </MenuItem>
-                    </SubMenu>
-                )}
+                    {!collapsed && canManageUsers(session) && (
+                        <SubMenu
+                            label="Relatórios"
+                            style={{
+                                fontSize: "17px",
+                                borderBottom: "1px solid rgba(0, 0, 0, 0.13)"
+                            }}
+                        >
+                            <MenuItem icon={<FaChartBar />} className="pro-menu-item" component={<Link to="/relatorio-financeiro" />}>
+                                Resultado Financeiro
+                            </MenuItem>
+                            <MenuItem icon={<FaReceipt />} className="pro-menu-item" component={<Link to="/relatorio-despesa-veiculo" />}>
+                                Despesas por Veículo
+                            </MenuItem>
+                            <MenuItem icon={<FaCalendarAlt />} className="pro-menu-item" component={<Link to="/relatorio-despesa-periodo" />}>
+                                Despesas por Período
+                            </MenuItem>
+                            <MenuItem icon={<FaClipboardList />} className="pro-menu-item" component={<Link to="/relatorio-inventario" />}>
+                                Inventário de Veículos
+                            </MenuItem>
+                        </SubMenu>
+                    )}
 
-                {/* Adicione mais menus/submenus aqui */}
-            </Menu>
-        </Sidebar>
+                    {!collapsed && (
+                        <SubMenu
+                            label="Configurações"
+                            style={{
+                                fontSize: "17px",
+                                borderBottom: "1px solid rgba(0, 0, 0, 0.13)"
+                            }}
+                        >
+                            <MenuItem icon={<FaUser />} className="pro-menu-item" component={<Link to="/configuracoes/perfil" />}>
+                                Perfil
+                            </MenuItem>
+                            {canAdminUsers(session) &&
+                                <MenuItem icon={<FaUsers />} className="pro-menu-item" component={<Link to="/configuracoes/usuarios" />}>
+                                    Usuários
+                                </MenuItem>
+                            }
+                            {canSeeStores(session) &&
+                                <MenuItem icon={<FaClipboardList />} className="pro-menu-item" component={<Link to="/configuracoes/lojas" />}>
+                                    Lojas
+                                </MenuItem>
+                            }
+                            <MenuItem icon={<FaPalette />} className="pro-menu-item" component={<Link to="/configuracoes/preferencias" />}>
+                                Preferências
+                            </MenuItem>
+                            <MenuItem icon={<FaKey />} className="pro-menu-item" component={<Link to="/configuracoes/senha" />}>
+                                Alterar Senha
+                            </MenuItem>
+                        </SubMenu>
+                    )}
+                    {!collapsed && (
+                        <MenuItem
+                            icon={<FaSignOutAlt />}
+                            className="menu-logout"
+                            onClick={() => setShowLogoutModal(true)}
+                            style={{
+                                fontSize: "17px",
+                                borderBottom: "1px solid rgba(0, 0, 0, 0.13)"
+                            }}
+                        >
+                            Sair
+                        </MenuItem>
+                    )}
+
+                    {/* Adicione mais menus/submenus aqui */}
+                </Menu>
+            </Sidebar>
+            <LogoutModal
+                open={showLogoutModal}
+                onCancel={() => setShowLogoutModal(false)}
+                onConfirm={handleLogout}
+            />
+        </>
     );
 }

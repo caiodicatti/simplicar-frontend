@@ -8,11 +8,14 @@ import Pagination from '../../components/Pagination/Pagination';
 import { Row, Col } from "react-bootstrap";
 import "./UsersPage.css";
 
+const loggedUser = JSON.parse(localStorage.getItem("userSession") || "{}");
+
 const PAGE_SIZE = 2;
 
 export default function UsersPage() {
     const [users, setUsers] = useState([]);
     const [roles, setRoles] = useState([]);
+    const [stores, setStores] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
     const [modalMode, setModalMode] = useState("create");
@@ -23,6 +26,7 @@ export default function UsersPage() {
     // Busca roles
     useEffect(() => {
         apiMock.getRoles().then(setRoles);
+        apiMock.getStores().then(setStores);
     }, []);
 
     // Busca usuários
@@ -147,6 +151,8 @@ export default function UsersPage() {
                 mode={modalMode}
                 user={currentUser}
                 roles={roles}
+                stores={stores}
+                currentUser={loggedUser}
                 onSave={handleSaveUser}
                 onCancel={handleCancelModal}
                 onToggleActive={handleToggleActive}

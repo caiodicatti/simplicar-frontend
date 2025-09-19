@@ -37,7 +37,7 @@ export default function TradeInSearchSelector({ value, onChange, className }) {
                     }
                 })}
                 value={value || null}
-                placeholder="Busque pelo modelo (mínimo 3 letras)"
+                placeholder="Busque pelo modelo ou placa"
                 isClearable
                 className={className}
                 classNamePrefix="react-select"

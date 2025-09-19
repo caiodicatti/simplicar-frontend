@@ -12,6 +12,7 @@ import PeriodExpenseReport from "./pages/PeriodExpenseReport/PeriodExpenseReport
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import UsersPage from "./pages/UsersPage/UsersPage";
 import PreferencesPage from "./pages/UserPreferencesPage/UserPreferencesPage";
+import PasswordChangePage from "./pages/PasswordChangePage/PasswordChangePage";
 
 export default function App() {
   return (
@@ -179,16 +180,16 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-      {/* <Route
+      <Route
         path="/configuracoes/senha"
         element={
           <ProtectedRoute>
             <ProtectedLayout>
-              <ChangePasswordPage />
+              <PasswordChangePage />
             </ProtectedLayout>
           </ProtectedRoute>
         }
-      />  */}
+      />
 
     </Routes>
   );
